@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL" Id="{5881d442-5fa2-4178-8534-e94e56f86ea3}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	StartButton			: BOOL;
+	CarRedLight			: BOOL;
+	CarYellowLight		: BOOL;
+	CarGreenLight		: BOOL;
+	CrossWalkRedLight	: BOOL;
+	CrossWalkGreenLight : BOOL;
+	NightLight			: BOOL; 
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
