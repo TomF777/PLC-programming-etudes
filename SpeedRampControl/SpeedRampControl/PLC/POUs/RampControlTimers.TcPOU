@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="RampControlTimers" Id="{d5638ef8-679f-47e6-8b00-45f15c0269d6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RampControlTimers
+VAR_INPUT
+	Start					:	BOOL;
+	Stop					:	BOOL;
+	RampUpTime				:	UINT;			// ramp up time in seconds
+	ContDutyTime			:	UINT;			// continous duty time in seconds
+	RampDownTime			:	UINT;			// ramp down time in seconds
+	RampMinVal				:	REAL;			// output min value
+	RampMaxVal				:	REAL;			// output max value
+	PlcCycleTimeMs			:	UINT;			// PLC cycle in miliseconds
+END_VAR
+VAR_OUTPUT
+	Out						:	REAL;
+	ErrorConfig				:	BOOL;
+END_VAR
+VAR
+	rtStart					:	R_TRIG;
+	rtStop					:	R_TRIG;
+	SeqStep					:	(IDLE, INIT, RAMP_UP, CONTINOUS_DUTY, RAMP_DOWN);
+	
+	RampUpValRes			:	REAL;
+	RampDownValRes			:	REAL;	
+	
+	InitBit					:	BOOL:=TRUE;
+	tonRampUp				:	TON;
+	tonContDuty				:	TON;
+	tonRampDown				:	TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+This FB generates output signal ramps including three areas:
+- up ramp (in seconds)
+- continous duty (in seconds)
+- down ramp (in seconds)
+
+Start cycle with <Start> pulse.
+The output signal can be stopped with <Stop> pulse during ramp up and cont. duty cycle. 
+It ramps down in that case to avoid immediate stop (any demage of the controlled device).  
+*)
+
+IF InitBit THEN
+	// check input parameters for unvalid values
+	IF PlcCycleTimeMs=0 OR RampUpTime=0 OR RampDownTime=0 THEN
+		ErrorConfig := TRUE;
+	ELSE;
+		ErrorConfig := FALSE;
+		(*init calculations*)
+		// output value resolution for each cycle during ramp up
+		RampUpValRes := (RampMaxVal - RampMinVal) / ((TO_REAL(RampUpTime) / (TO_REAL(PlcCycleTimeMs) / 1000.0)));
+		// output value resolution for each cycle during ramp down
+		RampDownValRes := (RampMaxVal - RampMinVal) / ((TO_REAL(RampDownTime) / (TO_REAL(PlcCycleTimeMs) / 1000.0)));
+	END_IF;
+	InitBit			:= FALSE;
+END_IF
+
+// detect pushbuttons action
+rtStart(CLK:=Start);
+rtStop(CLK:=Stop);
+
+IF rtStart.Q AND SeqStep=IDLE AND NOT ErrorConfig THEN
+	SeqStep := INIT;
+END_IF
+
+IF rtStop.Q AND (SeqStep=CONTINOUS_DUTY OR SeqStep=RAMP_UP) THEN
+	SeqStep := RAMP_DOWN;
+END_IF
+
+
+CASE SeqStep OF
+	IDLE:
+		;
+	INIT:
+		Out				:= RampMinVal;
+		tonRampUp.IN	:= FALSE;
+		tonContDuty.IN	:= FALSE;
+		tonRampDown.IN	:= FALSE;
+		tonRampUp.PT	:= UINT_TO_TIME(RampUpTime * 1000);
+		tonContDuty.PT	:= UINT_TO_TIME(ContDutyTime * 1000);
+		tonRampDown.PT	:= UINT_TO_TIME(RampDownTime * 1000);
+		
+		SeqStep			:= RAMP_UP;
+		
+	RAMP_UP:
+		tonRampUp.IN:= TRUE;
+		Out := Out + RampUpValRes;
+		IF tonRampUp.Q THEN 
+			SeqStep 		:= CONTINOUS_DUTY; 
+			tonRampUp.IN 	:= FALSE;
+		END_IF
+		
+	CONTINOUS_DUTY:
+		tonContDuty.IN := TRUE;
+		IF tonContDuty.Q THEN
+			SeqStep 		:= RAMP_DOWN;
+			tonContDuty.IN 	:= FALSE;
+		END_IF
+		
+	RAMP_DOWN:
+		IF (Out - RampDownValRes) > RampMinVal THEN
+			Out := Out - RampDownValRes;
+		ELSE
+			Out := RampMinVal;
+		END_IF
+		
+		tonRampDown.IN	:= TRUE;
+		IF tonRampDown.Q THEN
+			SeqStep 		:= IDLE;
+			tonRampDown.In 	:= FALSE;
+		END_IF
+END_CASE
+
+tonRampUp();
+tonContDuty();
+tonRampDown();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{4c63616b-78bd-4999-acc9-ad9d8ed1d662}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	RampControlCycles	:	RampControlCycles;
+	RampControlTime		:	RampControlTimers;
+	StartPb				: 	BOOL;
+	StopPb				: 	BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RampControlCycles(Start:= StartPb,
+			Stop := StopPb,
+			RampUpTime := 15,
+			ContDutyTime := 20,
+			RampDownTime := 5,
+			RampMinVal := 10,
+			RampMaxVal := 100,
+			PlcCycleTimeMs := 10);
+			
+			
+RampControlTime(Start:= StartPb,
+			Stop := StopPb,
+			RampUpTime := 7,
+			ContDutyTime := 10,
+			RampDownTime := 5,
+			RampMinVal := 5,
+			RampMaxVal := 70,
+			PlcCycleTimeMs := 10);
+	
+	]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
