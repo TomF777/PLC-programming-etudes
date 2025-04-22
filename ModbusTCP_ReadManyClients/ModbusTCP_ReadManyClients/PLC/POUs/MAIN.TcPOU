@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{646e244b-2fc3-4e36-8043-0869201e1318}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	SlavePolling		:	SlavePolling;
+	SlaveIpAddresses	:	ARRAY [1..GVL.SLAVE_COUNT] OF STRING(15) := ['192.168.1.100', '192.168.1.101', '192.168.1.102'];
+	SlaveData			:	ARRAY [1..GVL.SLAVE_COUNT, 0..GVL.DATA_VOLUME_IN_WORD] OF WORD;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+This program reads out data from multiple Modbus TCP slaves
+Number of MB slaves defined in GVL.SLAVE_COUNT
+Number of registers to be read out from slaves defined in GVL.DATA_VOLUME_IN_WORD
+SlaveIpAddresses : array with IP addresses of MB slaves
+*)
+
+SlavePolling(Start:= TRUE,
+			 SlaveIpAddresses:=SlaveIpAddresses ,
+			 RequestTime:= ,
+			 SlaveData=>SlaveData );
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

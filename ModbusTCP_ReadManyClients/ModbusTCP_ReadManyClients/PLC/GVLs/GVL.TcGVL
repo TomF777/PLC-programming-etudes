@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL" Id="{384d6781-9c74-4391-a70f-218c357bf486}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+
+VAR_GLOBAL CONSTANT
+	SLAVE_COUNT							: WORD := 3; (* Number of Slaves which should be polled *)
+	DATA_VOLUME_IN_WORD					: WORD:=  5; (* Number of WORDS which should be read out *)
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
