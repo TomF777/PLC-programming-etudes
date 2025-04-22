@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL" Id="{835a0f2d-55f2-40b0-bc76-a050de682363}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+		RunBit			:	BOOL;		// internal control bit. Plant running if TRUE
+		K3Flag			:	BOOL:=TRUE;	// control the K5 cylinder. True if cylinder is up
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
