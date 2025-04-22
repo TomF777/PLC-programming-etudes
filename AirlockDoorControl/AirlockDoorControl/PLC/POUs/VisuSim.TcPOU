@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="VisuSim" Id="{ce7c8dbf-63e1-4545-883f-71bdcdfb471b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM VisuSim
+VAR
+	Door01Pos				:	UINT;
+	Door02Pos				:	UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF MAIN.LsDoor1Opened THEN
+	Door01Pos := 120;
+ELSIF MAIN.LsDoor1Closed THEN
+	Door01Pos := 0;
+END_IF
+
+
+IF MAIN.LsDoor2Opened THEN
+	Door02Pos := 120;
+ELSIF MAIN.LsDoor2Closed THEN
+	Door02Pos := 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

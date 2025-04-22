@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MotorSimulation" Id="{d8392292-d890-4406-9d27-f11f474481f5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MotorSimulation
+VAR_INPUT
+	CmdOpen					:	BOOL;
+	CmdClose				:	BOOL;
+END_VAR
+VAR_OUTPUT
+	LsDoorClosed			:	BOOL:=TRUE;
+	LSDoorOpened			:	BOOL:=FALSE;
+END_VAR
+VAR
+	tonOpen					:	TON;
+	tonClose				:	TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF CmdClose THEN
+	tonClose.In:=TRUE;
+END_IF
+
+IF CmdOpen THEN
+	tonOpen.In:=TRUE;
+END_IF
+
+IF tonOpen.Q THEN 
+	tonOpen.In:=FALSE;
+	LsDoorClosed := FALSE;
+	LSDoorOpened := TRUE;
+END_IF
+
+IF tonClose.Q THEN 
+	tonClose.In:=FALSE;
+	LsDoorClosed := TRUE;
+	LSDoorOpened := FALSE;
+END_IF
+
+tonOpen(PT:=T#1S);
+tonClose(PT:=T#1S);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

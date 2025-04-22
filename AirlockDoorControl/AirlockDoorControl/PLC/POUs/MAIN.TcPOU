@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{a720d8eb-063f-4195-90ef-fa6c44f6f091}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	DoorControl 		: DoorControl;
+	Pb01Sim				: MotorSimulation;
+	Pb02Sim				: MotorSimulation;
+	PbOut1				: BOOL;
+	PbIn1				: BOOL;
+	PbOut2				: BOOL;
+	PbIn2				: BOOL;
+	
+	LsDoor1Closed		: BOOL;
+	LsDoor1Opened		: BOOL;
+	LsDoor2Closed		: BOOL;
+	LsDoor2Opened		: BOOL;
+
+	MotorDoor01Open		: BOOL;
+	MotorDoor01Close	: BOOL;
+	MotorDoor02Open		: BOOL;
+	MotorDoor02Close	: BOOL;
+	CmdOpen				: BOOL;
+	CmdClose			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+Pb01Sim(CmdOpen := MotorDoor01Open,
+		CmdClose := MotorDoor01Close,
+		LsDoorClosed => LsDoor1Closed,
+		LsDoorOpened => LsDoor1Opened);
+		
+Pb02Sim(CmdOpen := MotorDoor02Open,
+		CmdClose := MotorDoor02Close,
+		LsDoorClosed => LsDoor2Closed,
+		LsDoorOpened => LsDoor2Opened);
+
+VisuSim();
+		
+DoorControl(
+	PbOut1:= PbOut1, 
+	PbIn1:= PbIn1, 
+	LsDoor1Closed:= LsDoor1Closed, 
+	LsDoor1Opened:= LsDoor1Opened, 
+	PbOut2:= PbOut2, 
+	PbInt2:= PbIn2, 
+	LsDoor2Closed:= LsDoor2Closed, 
+	LsDoor2Opened:= LsDoor2Opened, 
+	MotorDoor01Open=> MotorDoor01Open, 
+	MotorDoor01Close=> MotorDoor01Close, 
+	MotorDoor02Open=> MotorDoor02Open, 
+	MotorDoor02Close=> MotorDoor02Close);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
