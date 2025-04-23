@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Simulation" Id="{b069791d-3638-4eb3-9379-9d80a282a7a0}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Simulation
+VAR
+	Idx					:	REAL;
+	Level				: 	REAL;
+END_VAR
+
+VAR_OUTPUT
+	LsLow: BOOL;
+	LsMiddle: BOOL;
+	LsHigh: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Idx := Idx + 0.001;
+Level := SIN(Idx);
+
+Level := Level * 2000 + 2000;
+
+LsLow 		:= Level >= 1500;
+LsMiddle 	:= Level >= 2500;
+LsHigh		:= NOT (Level >= 3500);
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
