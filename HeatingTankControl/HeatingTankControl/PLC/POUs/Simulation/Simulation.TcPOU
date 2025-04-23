@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Simulation" Id="{92933681-ae9f-466d-84ef-a8302b86c546}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Simulation
+VAR_INPUT
+	TankDiam					:	REAL;
+	FillValve					:	BOOL;
+	HeatValve					:	BOOL;
+	EmptyValve					:	BOOL;
+END_VAR
+
+
+VAR
+		TankLevelSimulator		: 	TankLevelSimulator;
+		Flow					:	REAL;
+		TemperatureSim			: 	REAL;
+		
+END_VAR
+
+VAR_OUTPUT
+		Level					:	REAL;
+		Temperature				:	REAL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// flow depending on valve position
+Flow := TO_REAL(FillValve) * 0.1 - TO_REAL(EmptyValve) * 0.05;
+
+TankLevelSimulator(	Flow:=Flow,
+					TankDiameter:=TankDiam
+					);
+					
+
+Level := Scale(
+				Enable:=TRUE , 
+				ValueIn:=TankLevelSimulator.Level , 
+				ScaleInMin:= 0, 
+				ScaleInMax:= 50, 
+				ScaleOutMin:= 0, 
+				ScaleOutMax:= 65535, 
+				DoneOk=> );
+				
+// temperature depending on valve position
+IF HeatValve THEN
+	TemperatureSim := TemperatureSim + 0.002;
+ELSIF NOT HeatValve AND Temperature > 0 THEN
+	TemperatureSim := TemperatureSim - 0.002;
+END_IF
+
+Temperature := Scale(
+					Enable:=TRUE , 
+					ValueIn:=TemperatureSim , 
+					ScaleInMin:= 0, 
+					ScaleInMax:= 40, 
+					ScaleOutMin:= 0, 
+					ScaleOutMax:= 65535, 
+					DoneOk=> );
+							
+
+
+
+					
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

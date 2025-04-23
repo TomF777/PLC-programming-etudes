@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="IntegralCalculate" Id="{e596338c-1b01-48be-9651-648ba3d5e80f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK IntegralCalculate
+VAR_INPUT
+	InputValue 		: REAL;
+	PlcCycleTime 	: REAL := 0.01;
+END_VAR
+VAR_OUTPUT
+	    IntegratedValue : REAL := 0.0;
+END_VAR
+VAR
+	PrevInputValue : REAL := 0.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Integration logic (Trapezoidal Method)
+IntegratedValue := IntegratedValue + ((InputValue + PrevInputValue) * 0.5 * PlcCycleTime);
+
+// Update previous value for next cycle
+PrevInputValue := InputValue;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

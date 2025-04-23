@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Scale" Id="{7d1a778e-3658-42a6-a3f0-5e20b39c500d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Scale : REAL
+VAR_INPUT
+	Enable			:	BOOL;		// enable function
+	ValueIn			:	REAL;		// value to be scaled
+	ScaleInMin		:	REAL;		// ScaleInMin, must be < then ScaleInMax
+	ScaleInMax		:	REAL;		// ScaleInMax, must be > then ScaleInMin
+	ScaleOutMin		:	REAL;		// ScaleOutMin, must be < then ScaleOutMax
+	ScaleOutMax		:	REAL;		// ScaleOutMax, must be > then ScaleOutMin
+END_VAR
+VAR
+	Error			:	BOOL;		// wrong input parameter
+	Slope			:	REAL;
+	Offset			:	REAL;
+END_VAR
+
+VAR_OUTPUT
+	DoneOk			: BOOL;			// conversion done OK
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Enable THEN
+	IF 	ScaleOutMin >= ScaleOutMax OR 
+		ScaleInMin >= ScaleInMax OR
+		ValueIn < ScaleInMin OR 
+		ValueIn > ScaleInMax THEN
+		Error := TRUE;
+	END_IF
+	
+	IF NOT Error THEN
+		Slope 	:= (ScaleOutMax - ScaleOutMin) / (ScaleInMax - ScaleInMin);
+		Offset 	:= ScaleOutMax - (Slope * ScaleInMax);
+		DoneOk 	:= TRUE;
+		Scale := (Slope * ValueIn) + Offset;
+	ELSE
+		DoneOk 	:= FALSE;
+	END_IF
+	
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TankLevelSimulator" Id="{16194937-d4bb-4c43-aed1-a4e8d8d64fb6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TankLevelSimulator
+VAR_INPUT
+	Flow				:	REAL;				// input flow in [m3/s]
+	TankDiameter		:	REAL;				// tank diameter in [m]
+END_VAR
+VAR_OUTPUT
+	Level				:	REAL;				// output tank level in [m]
+END_VAR
+VAR
+	TankArea			:	REAL;				// tank cross section area in [m2]
+	Integral			:	IntegralCalculate;	// integral calculation
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// tank cross area
+TankArea := TO_REAL(PI) *(TankDiameter * TankDiameter / 4.0 );
+
+
+IF Level>=0 AND TankArea<>0 THEN
+	Integral(InputValue:=(Flow - (0.001 * SQRT(Level))) / TankArea);
+	Level := Integral.IntegratedValue;
+	IF Level < 0 THEN
+		Level := 0;
+	END_IF
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
