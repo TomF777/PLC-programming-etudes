@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <GVL Name="GVL" Id="{d4c1369d-c5b3-44e2-95a0-83f4b116c67d}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	XPosMax		:	WORD:=2;
+	YPosMax		:	WORD:=3;
+	ZPosMax		:	WORD:=4;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

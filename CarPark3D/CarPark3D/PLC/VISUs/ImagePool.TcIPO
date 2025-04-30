@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <ImagePool Name="ImagePool" Id="{413e1775-6e4c-4c97-bef5-e0c84ce4f183}">
+    <XmlArchive>
+      <Data>
+        <o xml:space="preserve" t="ImagePoolObject">
+          <v n="UniqueIdGenerator">"4"</v>
+          <l n="BitmapPool" t="ArrayList" cet="ImagePoolItem">
+            <o>
+              <v n="BitmapID">"1"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|C:\2_PROJECTS\TC3\PLC_Programming_Exercises\car01.png"</v>
+              <v n="ItemID">1</v>
+            </o>
+            <o>
+              <v n="BitmapID">""</v>
+              <v n="FileID">""</v>
+              <v n="ItemID">2</v>
+            </o>
+          </l>
+          <v n="GuidInit">{5dc7ae0b-6d74-4dae-ae75-37bb180bd118}</v>
+          <v n="GuidReInit">{718e7604-968a-4824-af4d-5f38dfffc2c2}</v>
+          <v n="GuidExitX">{180d0e64-276e-4f9e-8573-79c5ede35db4}</v>
+          <v n="ValidIds">false</v>
+        </o>
+      </Data>
+      <TypeList>
+        <Type n="ArrayList">System.Collections.ArrayList</Type>
+        <Type n="Boolean">System.Boolean</Type>
+        <Type n="Guid">System.Guid</Type>
+        <Type n="ImagePoolItem">{215b2719-0347-4e4d-ba85-8bcd66946f66}</Type>
+        <Type n="ImagePoolObject">{bb0b9044-714e-4614-ad3e-33cbdf34d16b}</Type>
+        <Type n="Int32">System.Int32</Type>
+        <Type n="String">System.String</Type>
+      </TypeList>
+    </XmlArchive>
+  </ImagePool>
+</TcPlcObject>

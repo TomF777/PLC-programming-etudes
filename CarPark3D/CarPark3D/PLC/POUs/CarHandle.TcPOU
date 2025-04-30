@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="CarHandle" Id="{c0298902-ab9f-4eb3-bde8-fa05c8fbecd4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CarHandle
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR_IN_OUT
+	ArrayPark		:	ARRAY[*,*,*] OF STRING(15);	// pointer to 3d array
+END_VAR
+VAR
+	Loop			:	CarPos;						// temp. variable
+	TotalPositions	: 	INT;						// total number of car positions in car park
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+This FB handles three dimensional car park.
+- ArrayPark - Dimension of the car park
+*)
+
+
+// copy ARRAY to local variables
+Loop.X := DINT_TO_INT(UPPER_BOUND(ArrayPark,1));		// cordinate X
+Loop.Y := DINT_TO_INT(UPPER_BOUND(ArrayPark,2));		// cordinate Y
+Loop.Z := DINT_TO_INT(UPPER_BOUND(ArrayPark,3));		// cordinate Z
+
+// total number of car positions in car park
+TotalPositions := Loop.X * Loop.Y * Loop.Z;]]></ST>
+    </Implementation>
+    <Method Name="M_FindCar" Id="{0444ed82-821d-4065-948f-4c377d69ff18}">
+      <Declaration><![CDATA[METHOD M_FindCar : BOOL
+VAR_INPUT
+	CarPlate		:	STRING(15);		// plate number of the car
+END_VAR
+VAR
+	CarPos			:	CarPos;			// location in car park
+END_VAR
+VAR_OUTPUT
+	FoundCarPos		:	CarPos;			// location in car park
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+This Method finds car in car park using its car plate.
+CarPlate - car number plate which should be looked for in car park
+Methods Returns TRUE if car was successfully found, otherwise FALSE
+*)
+
+// Loop over all position in the 3D car park
+FOR CarPos.X:=1 TO Loop.X DO
+	FOR CarPos.Y:=1 TO Loop.Y DO
+		FOR CarPos.Z:=1 TO Loop.Z DO
+			
+			IF  FIND(ArrayPark[CarPos.X, CarPos.Y, CarPos.Z], CarPlate) > 0 THEN
+				FoundCarPos := CarPos;	// copy coordinates where car was located
+				M_FindCar := TRUE;
+				RETURN;
+			END_IF
+			
+		END_FOR
+	END_FOR
+END_FOR
+M_FindCar := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_InsertCar" Id="{f5b80b7d-8c6c-43e8-839b-38b31f448fd5}">
+      <Declaration><![CDATA[METHOD M_InsertCar : BOOL
+VAR_INPUT
+	CarPlate		:	STRING(15);		// plate number of the car
+END_VAR
+VAR
+	CarPos			:	CarPos;			// location in car park
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+This Method inserts one car into car park.
+CarPlate - car number plate which should be insert into car park
+Methods Returns TRUE if car was successfully inserted, otherwise FALSE
+*)
+
+// Loop over all position in the 3D car park
+FOR CarPos.X:=1 TO Loop.X DO
+	FOR CarPos.Y:=1 TO Loop.Y DO
+		FOR CarPos.Z:=1 TO Loop.Z DO
+			
+			// insert car at the first free location in the car park
+			IF ArrayPark[CarPos.X, CarPos.Y, CarPos.Z]='' THEN
+				ArrayPark[CarPos.X, CarPos.Y, CarPos.Z] := CarPlate;
+				M_InsertCar := TRUE;
+				RETURN;
+			END_IF
+			
+		END_FOR
+	END_FOR
+END_FOR
+
+M_InsertCar := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_RemoveCar" Id="{b6a53031-c4e4-481f-850a-7e52bfcc5a39}">
+      <Declaration><![CDATA[METHOD M_RemoveCar : BOOL
+VAR_INPUT
+	CarPlate		:	STRING(15);		// plate number of the car
+END_VAR
+
+VAR
+	CarPos			:	CarPos;			// location in car park
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(*
+This Method removes one car in car park.
+CarPlate - car number plate which should be removed in car park
+Methods Returns TRUE if car was successfully removed, otherwise FALSE
+*)
+
+// Loop over all position in the 3D car park
+FOR CarPos.X:=1 TO Loop.X DO
+	FOR CarPos.Y:=1 TO Loop.Y DO
+		FOR CarPos.Z:=1 TO Loop.Z DO
+			
+				IF FIND(ArrayPark[CarPos.X, CarPos.Y, CarPos.Z], CarPlate) > 0 THEN
+					ArrayPark[CarPos.X, CarPos.Y, CarPos.Z]:=''; 	// remove car = set string empty 
+					M_RemoveCar := TRUE;
+					RETURN;
+				END_IF
+			
+		END_FOR
+	END_FOR
+END_FOR
+
+M_RemoveCar := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="P_NumberFreePositions" Id="{848b38a8-7b50-4edd-a7d1-555eae2694f6}">
+      <Declaration><![CDATA[PROPERTY P_NumberFreePositions : INT
+
+// Property returns number of free locations in car park]]></Declaration>
+      <Get Name="Get" Id="{5c412e4a-7e51-4219-a9cd-d6edf5831cf5}">
+        <Declaration><![CDATA[VAR
+	CarCount		: 	INT;			// number of occupied par places in car park
+	CarPos			:	CarPos;			// location in car park
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// Loop over all position in the 3D car park
+FOR CarPos.X:=1 TO Loop.X DO
+	FOR CarPos.Y:=1 TO Loop.Y DO
+		FOR CarPos.Z:=1 TO Loop.Z DO
+			
+			IF ArrayPark[CarPos.X, CarPos.Y, CarPos.Z] <> '' THEN
+				CarCount := CarCount+1;
+			END_IF
+			
+		END_FOR
+	END_FOR
+END_FOR
+
+P_NumberFreePositions := TotalPositions - CarCount;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

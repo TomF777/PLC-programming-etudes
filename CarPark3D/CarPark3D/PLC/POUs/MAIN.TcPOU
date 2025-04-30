@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{4c29f2cb-49e3-48c0-8cca-3b146ee581c3}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	CarPlates		:	ARRAY [1..24] OF STRING(15) := ['AB12345', 'CD98765', 'EF24689', 'GH88888', 'IJ33388',
+														'KL57483', 'MN35991', 'OP46819', 'RS00001', 'TU22229',
+														'DE13578', 'ZX90909', 'YW10101', 'VW46372', 'ZZ00220',
+														'WE00772', 'JK77001', 'PO39120', 'LW09126', 'RM01928',
+														'EK11998', 'WY00664', 'HS05524', 'TT00099'];
+
+	InsertCar		:	BOOL;					// insert car trigger
+	
+	FindCar			:	BOOL;					// find car trigger
+	PlateToFind		:	STRING(15);				// car plate which should be found in the car park
+	CarFoundPos		:	CarPos;					// position of found car
+	
+	RemoveCar		:	BOOL;					// remove car trigger
+	CarToRemove		:	STRING(15);				// car plate which should be removed from the car park
+	
+	GetNoFreePlaces	:	BOOL;					// trigger for getting number of free places in car park
+	
+	rtAction		:	ARRAY[1..5] OF R_TRIG;
+	FreePlaces		:	INT;
+	
+	CarHandle		:	CarHandle;
+	
+	Result			: 	BOOL;					// operation result
+END_VAR
+
+VAR RETAIN PERSISTENT
+	CarPark			: ARRAY [1..GVL.XPosMax, 1..GVL.YPosMax, 1..GVL.ZPosMax] OF STRING(15);
+	Idx				:	INT:=1;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CarHandle(ArrayPark:=CarPark);
+
+
+rtAction[1](CLK:=InsertCar);
+rtAction[2](CLK:=FindCar);
+rtAction[3](CLK:=RemoveCar);
+rtAction[4](CLK:=GetNoFreePlaces);
+
+// insert car
+IF rtAction[1].Q THEN
+	Result := CarHandle.M_InsertCar(CarPlates[Idx]);
+	FreePlaces := CarHandle.P_NumberFreePositions;
+	Idx:= Idx + 1;
+	IF Idx > 24 THEN 
+		Idx := 1;
+	END_IF
+END_IF
+
+// find car
+IF rtAction[2].Q THEN
+	Result := CarHandle.M_FindCar(CarPlate:=PlateToFind,FoundCarPos=>CarFoundPos);
+END_IF
+
+// delete car
+IF rtAction[3].Q THEN
+	Result := CarHandle.M_RemoveCar(CarPlate := CarToRemove);
+	FreePlaces := CarHandle.P_NumberFreePositions;
+END_IF
+
+// get number of free places in car park
+IF rtAction[4].Q THEN
+	FreePlaces := CarHandle.P_NumberFreePositions;
+END_IF
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
