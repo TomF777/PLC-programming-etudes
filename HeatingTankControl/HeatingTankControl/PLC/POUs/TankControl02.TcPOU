@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="TankControl02" Id="{3c7e0a0e-d18a-4ae1-bdc9-b55c14d93f33}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TankControl02
+VAR_INPUT
+	Enable				:	BOOL;		// enable
+	TemperatureReq		:	REAL;		// temperature request
+	VolumeReq			:	REAL;		// volume request
+	TankDiameter		:	REAL;		
+	TankHeight			:	REAL;
+	LevelSensor			:	WORD;		// raw value from AI
+	TemperatureSensor	:	WORD;		// raw value from AI
+	StartControl		:	BOOL;		// start tank control
+END_VAR
+VAR_OUTPUT
+	FillValveCmd		:	BOOL;		// valve to fill the tank
+	EmptyValveCmd		:	BOOL;		// valve to empty the tank
+	HeatValveCmd		:	BOOL;		// valve to heat the tank
+	MixerMotorCmd		:	BOOL;		// mixer motor inside tank
+END_VAR
+VAR
+	LevelScaled			: 	REAL;
+	TemperatureScaled	: 	REAL;
+	TankVolume			: 	REAL;
+	CalculationsOK		:	BOOL;
+	SeqStep				:	(START, FILL, HEAT, EMPTY) := START;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+When Start Control switch is activated , Fill Valve opens and liquid fills the tank.
+When liquid reaches the requested level, Fill Valve closes. 
+Then Heat Valve opens and heats up the liquid. 
+When the liquid inside the tank reaches the requested temperature, Empty Valve opens to empty the tank.
+Mixer Motor ensures stirring during the heating process.
+*)
+
+IF Enable THEN
+	SetSequence();
+	SetOutput();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="Calculations" Id="{c6904486-dbe2-4da4-b307-7321890316fc}">
+      <Declaration><![CDATA[METHOD Calculations : BOOL
+VAR_INPUT
+
+END_VAR
+
+VAR
+	HeightTotal			: REAL;
+	LevelDoneOk			: BOOL;
+	VolumeDoneOk		: BOOL;
+	TemperatureDoneOk	: BOOL;
+END_VAR
+
+VAR_OUTPUT
+	DoneOk			: BOOL;			// conversion done OK
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[HeightTotal := TankDiameter + TankHeight;
+
+LevelScaled := THIS^.Scale(Enable := TRUE,
+			ValueIn := LevelSensor,
+			ScaleInMin := 0,
+			ScaleInMax := 65535,
+			ScaleOutMin := 0,
+			ScaleOutMax := HeightTotal,
+			DoneOk =>LevelDoneOk);
+			
+TankVolume := THIS^.TankVolumeCalculate(Diameter := TankDiameter,
+						  Height := TankHeight,
+						  Level := LevelScaled,
+						  DoneOk =>VolumeDoneOk);
+						  
+TemperatureScaled := THIS^.Scale(Enable := TRUE,
+			ValueIn := TemperatureSensor,
+			ScaleInMin := 0,
+			ScaleInMax := 65535,
+			ScaleOutMin := 0,
+			ScaleOutMax := 100,
+			DoneOk =>TemperatureDoneOk);
+			
+DoneOk := LevelDoneOk AND VolumeDoneOk AND TemperatureDoneOk;
+	
+						  
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Scale" Id="{6e547174-6ef4-4f68-8aaa-b9e859d60f74}">
+      <Declaration><![CDATA[METHOD Scale : REAL
+VAR_INPUT
+	Enable			:	BOOL;		// enable function
+	ValueIn			:	REAL;		// value to be scaled
+	ScaleInMin		:	REAL;		// ScaleInMin, must be < then ScaleInMax
+	ScaleInMax		:	REAL;		// ScaleInMax, must be > then ScaleInMin
+	ScaleOutMin		:	REAL;		// ScaleOutMin, must be < then ScaleOutMax
+	ScaleOutMax		:	REAL;		// ScaleOutMax, must be > then ScaleOutMin
+END_VAR
+
+VAR
+	Error			:	BOOL;		// wrong input parameter
+	Slope			:	REAL;
+	Offset			:	REAL;
+END_VAR
+
+VAR_OUTPUT
+	DoneOk			: BOOL;			// conversion done OK
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Enable THEN
+	IF 	ScaleOutMin >= ScaleOutMax OR 
+		ScaleInMin >= ScaleInMax OR
+		ValueIn < ScaleInMin OR 
+		ValueIn > ScaleInMax THEN
+		Error := TRUE;
+	END_IF
+	
+	IF NOT Error THEN
+		Slope 	:= (ScaleOutMax - ScaleOutMin) / (ScaleInMax - ScaleInMin);
+		Offset 	:= ScaleOutMax - (Slope * ScaleInMax);
+		DoneOk 	:= TRUE;
+		Scale := (Slope * ValueIn) + Offset;
+	ELSE
+		DoneOk 	:= FALSE;
+	END_IF
+	
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetOutput" Id="{972650c4-2490-440c-a6b7-4c0668424fd9}">
+      <Declaration><![CDATA[METHOD SetOutput : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Enable THEN
+	MixerMotorCmd:=FALSE;
+	FillValveCmd:=FALSE;
+	HeatValveCmd:=FALSE;
+	EmptyValveCmd:=FALSE;
+	
+	CASE SeqStep OF
+		FILL:		FillValveCmd:=TRUE;	
+
+		HEAT:		MixerMotorCmd:=TRUE;
+					HeatValveCmd:=TRUE;
+		
+		EMPTY:		EmptyValveCmd:=TRUE;	
+	END_CASE
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSequence" Id="{24c357f6-bfd6-4a44-8555-e2859b1c2c1f}">
+      <Declaration><![CDATA[METHOD SetSequence : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Calculations(DoneOk=>CalculationsOK);
+
+IF CalculationsOK AND SeqStep = START AND StartControl THEN
+	SeqStep := FILL;
+ELSIF CalculationsOK AND SeqStep = FILL AND TankVolume>VolumeReq THEN
+	SeqStep := HEAT;
+ELSIF CalculationsOK AND SeqStep = HEAT AND TemperatureScaled > TemperatureReq THEN
+	SeqStep := EMPTY;
+ELSIF CalculationsOK AND SeqStep = EMPTY AND TankVolume < 0.001 THEN
+	SeqStep := START;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TankVolumeCalculate" Id="{8676f00f-48fa-495a-9927-3ce6a4de91ce}">
+      <Declaration><![CDATA[METHOD TankVolumeCalculate : REAL
+VAR_INPUT
+	Diameter			:	REAL;		// tank diameter
+	Height				:	REAL;		// tank height
+	Level				:	REAL;		// current level measured
+END_VAR
+
+VAR
+	LevelRadius			:	REAL;		// level radius in circle
+	Volume				:	REAL;		// volume
+END_VAR
+
+VAR_OUTPUT
+	DoneOk			: BOOL;				// conversion done OK
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// check level depth
+IF Level < 0 THEN
+	Level := 0;	
+END_IF
+
+// check level height - tank cannot be overfilled
+IF Level > (Diameter/2 + Height) THEN
+	Level := Diameter/2 + Height;
+END_IF
+
+
+// hemisphere
+IF Level <= Diameter/2 THEN
+	// hemisphere partially filled
+	LevelRadius := SQRT(Level * (Diameter/2 - Level));
+	Volume := (TO_REAL(PI)/6) * Level * (3 * LevelRadius * LevelRadius + Level * Level);
+ELSE
+	// hemisphere filled
+	Volume := 2.0/3.0 * TO_REAL(PI) * Diameter/2 * Diameter/2 * Diameter/2;
+END_IF
+
+// something in the cylinder
+IF Level > Diameter/2 THEN
+	Volume := Volume + (Level - Diameter/2) * TO_REAL(PI) * Diameter/2 * Diameter/2;
+END_IF
+
+TankVolumeCalculate := Volume;
+DoneOk := TRUE;
+ 
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

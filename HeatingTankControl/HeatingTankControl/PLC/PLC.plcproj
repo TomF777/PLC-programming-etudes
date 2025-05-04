@@ -36,7 +36,10 @@
     <Compile Include="POUs\Simulation\TankLevelSimulator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\TankControl.TcPOU">
+    <Compile Include="POUs\TankControl01.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\TankControl02.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
