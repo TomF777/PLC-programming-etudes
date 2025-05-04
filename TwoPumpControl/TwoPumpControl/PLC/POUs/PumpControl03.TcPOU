@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="PumpControl03" Id="{9aa7d661-9cad-425f-8465-388f027feca8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK PumpControl03
+VAR_INPUT
+	LsLow							:	BOOL;		// limit switch LOW (NO)
+	LsMiddle						:	BOOL;		// limit switch MIDDLE (NO)
+	LsHigh							:	BOOL;		// limit switch HIGH (NC)
+END_VAR
+VAR_OUTPUT
+	Motor1							:	BOOL;		// motor 1 output
+	Motor2							:	BOOL;		// motor 2 output
+END_VAR
+VAR
+	SeqStep							:	(STDBY, LOW, MIDDLE, HIGH) := STDBY;
+	SeqStepOld						:	(STDBY, LOW, MIDDLE, HIGH);
+	RunMotor						:	BOOL;		// pump alternation control
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SeqSelect();
+SeqOutput();]]></ST>
+    </Implementation>
+    <Method Name="SeqOutput" Id="{9e05b093-1add-4dc7-999d-1b539150de76}">
+      <Declaration><![CDATA[METHOD SeqOutput : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE SeqStep OF
+	LOW:				// pumps off
+		Motor1 := FALSE;
+		Motor2 := FALSE;
+		
+	MIDDLE:				// run one pump
+		// alternate between pumps
+		// change pump is first time run
+		IF SeqStep <> SeqStepOld THEN
+			RunMotor := NOT RunMotor;
+		END_IF
+		
+		// turn pumps on or off
+		Motor1 := RunMotor;
+		Motor2 := NOT RunMotor;
+	HIGH:				// tank full
+		Motor1 := TRUE;
+		Motor2 := TRUE;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SeqSelect" Id="{4e76eb10-fb6d-46f1-a5d4-6f78b477e166}">
+      <Declaration><![CDATA[METHOD SeqSelect : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// save current sequence step to handle alternation between pumps
+SeqStepOld := SeqStep;
+
+CASE SeqStep OF
+	STDBY:						// standby, no liquid in tank
+		IF LsLow THEN			// low level reached
+			SeqStep := LOW;
+		END_IF
+		
+	LOW:
+		IF LsMiddle THEN		// middle level reached
+			SeqStep := MIDDLE;
+		END_IF
+		
+	MIDDLE:						// tank half full
+		IF NOT LsLow THEN		// level -> lower
+			SeqStep := LOW;
+		END_IF
+		
+		IF NOT LsHigh THEN		// level -> higher
+			SeqStep := HIGH;
+		END_IF
+	
+	HIGH:						// tank full
+		IF NOT LsMiddle THEN	// level -> lower
+			SeqStep := MIDDLE;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
