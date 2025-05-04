@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="AlternatePump" Id="{ca001217-84cd-492f-83ad-b26f4c418c7f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION AlternatePump : BOOL
+VAR_INPUT
+	AlternationTimeSec	:	DWORD;			// time a pump has to run before alternating
+END_VAR
+VAR_IN_OUT
+	PumpTank			:	PumpStation;	// address pointer to the STRUCT outside the function
+END_VAR
+VAR
+	Idx					:	INT;			// loop index
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+FC for alternating between pumps.   
+AlternationTimeSec -  Time until pump alternation
+*)
+
+// only alternate between pumps if at least one, but not all pumps are running
+IF PumpTank.NoPumpsRun > 0 THEN
+	IF PumpTank.NoPumpsRun < GVL.MAX_PUMPS THEN
+		// check all pumps
+		FOR Idx:=1 TO GVL.MAX_PUMPS DO
+			IF AlternationTimeSec<PumpTank.PumpsArray[Idx].RunLastStartSec AND
+			   PumpTank.PumpsArray[Idx].RunState=PumpState.RUN THEN
+				  
+			  // first stop the pump that is running for the longest time
+			  StopPump(Pump:=PumpTank.PumpsArray[Idx]);
+			  
+			  // then start another pump
+			  FindAndStartPump(Pumps:=PumpTank.PumpsArray);
+			  
+			EXIT;	// only alternate to one pump. Another pump will be checked in next scan
+			END_IF
+			
+		END_FOR
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

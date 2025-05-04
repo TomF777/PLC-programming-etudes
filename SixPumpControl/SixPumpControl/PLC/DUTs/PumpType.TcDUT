@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="PumpType" Id="{98946af0-ea70-41bc-b0ba-b33888bd96f7}">
+    <Declaration><![CDATA[TYPE PumpType :
+STRUCT
+	RunState				:	PumpState := PumpState.STOP;
+	RunTotalMinutes			:	DWORD:=0;
+	RunLastStartSec			:	WORD:=0;
+	RunSeconds				:	WORD:=0;	// count up to 60
+	RunTimerSeconds			:	TON;		// count up RunSeconds
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

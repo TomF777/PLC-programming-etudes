@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="LevelControl" Id="{c7154914-8f18-412b-a09e-065ec289bda8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION LevelControl : BOOL
+VAR_INPUT
+	LevelLow			:	WORD;		// liquid level in tank must be above this level
+	LevelHigh			:	WORD;		// liquid level in tank must be belove this level
+	NoPumpsReq			:	INT;		// number of pumps required to run in the liquid level range
+END_VAR
+VAR_IN_OUT
+	PumpTank			:	PumpStation;	// address pointer to the STRUCT outside the function
+END_VAR
+VAR
+	PumpControl			:	INT:=0;		
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+This FC starts or stops a pump depending on the level in the tank
+*)
+
+// check level. Does a pump need to be started due to a high liquid level?
+IF PumpTank.Level>=LevelLow AND PumpTank.Level<=LevelHigh THEN
+	IF NoPumpsReq>PumpTank.NoPumpsRun THEN
+		// negative if one more pump needed
+		PumpControl:=NoPumpsReq-PumpTank.NoPumpsRun;
+	END_IF
+END_IF
+
+// check level. Does a pump need to be stopped due to a low liquid level?
+IF PumpTank.Level>=LevelLow AND PumpTank.Level<=LevelHigh THEN
+	IF NoPumpsReq<PumpTank.NoPumpsRun THEN
+		// positivve if a pump has to be stopped
+		PumpControl := NoPumpsReq-PumpTank.NoPumpsRun; 
+	END_IF
+END_IF
+
+// stop a pump if needed
+IF PumpControl<0 THEN
+	FindAndStopPump(Pumps:=PumpTank.PumpsArray);
+END_IF
+
+// start a pump if needed
+IF PumpControl>0 THEN
+	FindAndStartPump(Pumps:=PumpTank.PumpsArray);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

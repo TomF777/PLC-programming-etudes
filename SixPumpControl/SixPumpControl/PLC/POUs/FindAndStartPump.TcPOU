@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FindAndStartPump" Id="{7135b7f7-b461-4089-bb6d-abfd0848c959}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FindAndStartPump : BOOL
+VAR_IN_OUT
+	Pumps		:	ARRAY[1..GVL.MAX_PUMPS] OF PumpType;
+END_VAR
+VAR
+	Idx			:	INT;
+	RunTime		:	DWORD;
+	PumpIndex	:	INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[RunTime := 9999999;			// set initial high tiem to find a low run time
+PumpIndex := 1;
+
+// find a pump in stop state with the lowest run time
+FOR Idx:=1 TO GVL.MAX_PUMPS DO
+	IF RunTime > Pumps[Idx].RunTotalMinutes AND Pumps[Idx].RunState=PumpState.STOP THEN
+		RunTime:=Pumps[Idx].RunTotalMinutes;
+		PumpIndex:=Idx;
+	END_IF
+END_FOR
+
+// start pump
+StartPump(Pump:=Pumps[PumpIndex]);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

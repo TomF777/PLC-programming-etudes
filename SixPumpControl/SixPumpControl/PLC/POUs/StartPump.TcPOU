@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="StartPump" Id="{61bd5ad0-4df3-4c26-ba25-4cae9e36c668}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION StartPump : BOOL
+VAR_IN_OUT
+	Pump	:	PumpType;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// start pump
+Pump.RunState := Pumpstate.RUN;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

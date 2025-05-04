@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="StopPump" Id="{9bd54186-fdba-49c2-b637-117b8f41f4cd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION StopPump : BOOL
+VAR_IN_OUT
+	Pump		:	PumpType;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// pump will stop after 30 sec delay to avoid unnecessary start/stop
+
+IF Pump.RunLastStartSec > 5 THEN
+	Pump.RunState := PumpState.STOP;
+	Pump.RunLastStartSec := 0;
+END_IF
+ ]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

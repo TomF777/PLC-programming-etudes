@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="FindAndStopPump" Id="{968567e3-1b51-4dd3-a23e-08ebb4b47dbf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION FindAndStopPump : BOOL
+VAR_IN_OUT
+	Pumps			:	ARRAY[1..GVL.MAX_PUMPS] OF PumpType;
+END_VAR
+VAR
+	Idx				:	INT;
+	RunTime			:	DWORD;
+	PumpIndex		:	INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// set an initial lwo time to find the highest run time
+RunTime := 0;
+PumpIndex := 0;
+
+
+// find the pump in run state with the longest accumulated run time
+FOR Idx := 1 TO GVL.MAX_PUMPS DO
+	IF RunTime < Pumps[Idx].RunTotalMinutes AND Pumps[Idx].RunState = PumpState.RUN THEN
+		RunTime := Pumps[Idx].RunTotalMinutes;
+		PumpIndex := Idx;
+	END_IF
+END_FOR
+
+// stop the pump
+IF PumpIndex > 0 AND PumpIndex <= GVL.MAX_PUMPS THEN
+	StopPump(Pump:=Pumps[PumpIndex]);
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

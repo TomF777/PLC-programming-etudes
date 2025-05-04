@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{30bd3ba0-544d-488a-89ab-013ec7e9812e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	PumpTank			:	PumpStation;			// one pump station ceontains all pumps
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// update counters
+UpdateCounters(Pumps:=PumpTank.PumpsArray);
+
+// pump alternating time is 3600 seconds = 1 hour.
+// can be changed to a lower time  when testing
+AlternatePump(AlternationTimeSec:=10, PumpTank:=PumpTank);
+
+// update nomber of running pumps
+PumpTank.NoPumpsRun := NoOfRunningPumps(Pumps:=PumpTank.PumpsArray);
+
+// find the required pumps to run depending on the level in the tank
+LevelControl(751, 1000, 6, PumpTank); 
+LevelControl(601, 750, 5, PumpTank);
+LevelControl(451, 600, 4, PumpTank);
+LevelControl(301, 450, 3, PumpTank);
+LevelControl(151, 300, 2, PumpTank);
+LevelControl(100, 150, 1, PumpTank);
+LevelControl(0, 99, 0, PumpTank);      ]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

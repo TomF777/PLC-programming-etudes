@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="NoOfRunningPumps" Id="{dd70382d-6e0f-470d-9426-b3c91619a8d5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION NoOfRunningPumps : INT
+VAR_IN_OUT
+	Pumps		:	ARRAY[1..GVL.MAX_PUMPS] OF PumpType;
+END_VAR
+VAR
+	Idx			:	INT;
+	No			:	INT:=0;	// counter of running pumps
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* 
+Count number of running pumps
+*)
+
+FOR Idx:=1 TO GVL.MAX_PUMPS DO
+	IF Pumps[Idx].RunState = PumpState.RUN THEN
+		No:=No+1;
+	END_IF
+END_FOR
+
+NoOfRunningPumps := No;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

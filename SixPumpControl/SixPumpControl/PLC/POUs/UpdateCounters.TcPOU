@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="UpdateCounters" Id="{54919d89-1c1a-4971-8953-f5332ed79b34}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION UpdateCounters : BOOL
+VAR_IN_OUT
+	Pumps		:	ARRAY[1..GVL.MAX_PUMPS] of PumpType;
+END_VAR
+VAR
+	Idx			:	INT;		// loop counter
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[FOR Idx := 1 TO GVL.MAX_PUMPS DO
+	Pumps[Idx].RunTimerSeconds(IN:=NOT Pumps[Idx].RunTimerSeconds.Q, PT:=T#1S);
+	
+	// only update when pump in RUN state
+	IF Pumps[Idx].RunState = PumpState.RUN THEN
+		
+		// check if second timer ended
+		IF Pumps[Idx].RunTimerSeconds.Q THEN
+			Pumps[Idx].RunSeconds := Pumps[Idx].RunSeconds + 1;
+			Pumps[Idx].RunLastStartSec := Pumps[Idx].RunLastStartSec + 1;
+
+			// update minutes
+			IF Pumps[Idx].RunSeconds >= 60 THEN
+				Pumps[Idx].RunTotalMinutes := Pumps[Idx].RunTotalMinutes + 1;
+				Pumps[Idx].RunSeconds:=0; 
+			END_IF
+ 
+		END_IF
+	END_IF
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

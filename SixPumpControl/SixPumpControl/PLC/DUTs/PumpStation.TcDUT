@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="PumpStation" Id="{055d2e81-0b73-46cc-a1e3-e3c113cae641}">
+    <Declaration><![CDATA[TYPE PumpStation :
+STRUCT
+	PumpsArray				:	ARRAY[1..GVL.MAX_PUMPS] OF PumpType;
+	NoPumpsRun				:	INT;	// number of running pumps
+	Level					:	WORD;	// water level in the tank
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
