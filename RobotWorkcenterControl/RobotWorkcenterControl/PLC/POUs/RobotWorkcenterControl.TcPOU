@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="RobotWorkcenterControl" Id="{19c86e22-2b08-439a-ac34-6ee481bf5637}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RobotWorkcenterControl
+
+VAR_INPUT
+	StartProcess	:	BOOL;				// machine start
+	RobotPrgDone	: 	BOOL;				// input from robot  - program (1 or 2) done
+	WorkcenterDone	:	BOOL;				// input from workcenter - program 1 done
+END_VAR
+VAR_OUTPUT
+	InOperation		:	BOOL;				// indication that machine in operation mode
+	ReadyForNewTask	:	BOOL;				// indication that machine ready for 25 new items
+	
+	RobotPrgNo		:	INT:=-1;			// call robot program number
+	RobotTakePosX	:	INT;				// pick up position for robot
+	RobotTakePosY	:	INT;				// pick up position for robot
+
+	WorkcenterPrgNo	: INT:=-1;				// call workcenter program number (process the item)
+END_VAR
+VAR CONSTANT
+	TableX			:	INT:=5;				// number of items in X direction 
+	TableY			:	INT:=5;				// number of items in Y direction
+END_VAR
+VAR
+	ItemsTable		:	ARRAY[1..TableX, 1..TableY] OF ItemState;	// table with items
+	RunAll			: 	BOOL;										// run for all items									
+	RunOne			: 	BOOL;										// run for one item
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF StartProcess AND ReadyForNewTask THEN
+	TableReset();
+	ReadyForNewTask := FALSE;			// turn off the task done
+	InOperation := TRUE;				// turn on operating mode
+	RunAll:=TRUE;
+	RunOne:=FALSE;
+END_IF
+
+// take next item from the table
+IF RunAll AND NOT RunOne THEN
+	GetNextItem();
+END_IF
+
+// If no more items, then stop
+IF RobotTakePosX=0 AND RobotTakePosY=0 THEN
+	RunAll:=FALSE;
+	ReadyForNewTask:=TRUE;		// operation completed
+	InOperation:=FALSE;	// no operating mode
+END_IF
+
+// one item is in operating mode
+IF RunAll THEN
+	Operate();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="GetNextItem" Id="{33c399a5-1827-4b1a-bd42-6d8afaeeff4f}">
+      <Declaration><![CDATA[METHOD GetNextItem : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	X, Y		: INT;		// index for loop
+	Found		: BOOL;		// item is taken
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// find the next item to be moved from the table
+
+// reset next item position to zero
+RobotTakePosX:=0;
+RobotTakePosY:=0;
+Found:=FALSE;
+
+// loop all items
+// get the last item
+FOR X:=1 TO TableX DO
+	FOR Y:=1 TO TableY DO
+		IF NOT ItemsTable[X,Y].InProcess AND NOT Found THEN
+			RobotTakePosX:=X;
+			RobotTakePosY:=Y;
+			ItemsTable[X,Y].InProcess:=TRUE;	// set as item to pickup
+			Found:=TRUE;
+		END_IF
+	END_FOR
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operate" Id="{01df8de7-6dd6-4a8e-87fe-158cd18c67b6}">
+      <Declaration><![CDATA[METHOD Operate : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Send TakeXPos and TakeYPos position to the robot before
+// executing the code below
+
+// signal to robot. Move one item
+IF NOT RunOne THEN
+	RobotPrgNo:=1;			// start robot program 1
+END_IF
+
+RunOne:=TRUE;				// one item in progress
+
+// robot task done, start workcenter
+IF RobotPrgDone AND RobotPrgNo=1 THEN
+	RobotPrgNo:=-1;
+	WorkcenterPrgNo:=1;	
+END_IF
+
+// workcenter task done, item back to table
+IF WorkcenterDone THEN
+	WorkcenterPrgNo:=-1;
+	RobotPrgNo:=2;
+END_IF
+
+// robot task done
+IF RobotPrgDone AND RobotPrgNo=2 THEN
+	RobotPrgNo:=-1;
+	RunOne:=FALSE;			// stop item in progress
+	ItemsTable[RobotTakePosX,RobotTakePosY].Done := TRUE;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="TableReset" Id="{8d4afaa7-fb4b-4156-8511-9974eb510dcc}">
+      <Declaration><![CDATA[METHOD TableReset : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	X, Y		: INT;		// index for loop
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// init new table
+// reset all elements in the ARRAY
+// set all elements to FALSE i.e. its ready to be moved
+
+FOR X:=1 TO TableX DO
+	FOR Y:=1 TO TableY DO
+		ItemsTable[X,Y].InProcess := FALSE;
+		ItemsTable[X,Y].Done := FALSE;
+	END_FOR
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="WorkcenterSimulation" Id="{75eac286-f43c-42ca-ae30-fd789246b824}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK WorkcenterSimulation
+VAR_INPUT
+	StartProgram			:	BOOL;		// start workcenter program
+	ProgramTime				:	TIME;		// program execution time
+END_VAR
+VAR_OUTPUT
+	ProgramDone				:	BOOL;		// workcenter program done
+END_VAR
+VAR
+	TimeSim					:	TON;		// workcenter work timer
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+TimeSim(IN:=StartProgram, PT:=ProgramTime, Q=>ProgramDone);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

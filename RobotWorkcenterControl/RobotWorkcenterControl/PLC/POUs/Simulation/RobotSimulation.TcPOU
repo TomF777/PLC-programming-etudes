@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="RobotSimulation" Id="{e612d613-4198-48b1-8001-e70f8845149c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK RobotSimulation
+VAR_INPUT
+	StartProgramNo			:	INT;		// start robot program
+	ProgramTime				:	TIME;		// program execution time
+END_VAR
+VAR_OUTPUT
+	ProgramDone				:	BOOL;		// robot program done
+	TaskProgress			:	INT;		// completion of current program in percent
+	ArmPosition				:	INT;		// arm position for visualisation
+END_VAR
+VAR
+	TimeSim					:	TON;		// robot work timer
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TimeSim(IN:=StartProgramNo>0, PT:=ProgramTime, Q=>ProgramDone);
+
+IF ProgramTime<>T#0S THEN
+	TaskProgress := 100 * TIME_TO_INT(TimeSim.ET) / TIME_TO_INT(ProgramTime);
+END_IF;
+
+IF StartProgramNo < 1 THEN
+	ArmPosition:=0;
+ELSIF StartProgramNo=1 THEN
+	ArmPosition:=(300 + (TaskProgress * 130 / 100)) MOD 360;
+ELSIF StartProgramNo=2 THEN
+	ArmPosition:=(70 - (TaskProgress * 130 / 100)) MOD 360; 
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

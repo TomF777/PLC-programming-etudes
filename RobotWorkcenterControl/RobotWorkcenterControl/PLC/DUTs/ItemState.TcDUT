@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="ItemState" Id="{e9743a97-0fef-4dd2-b36e-85c1ff9bbcb6}">
+    <Declaration><![CDATA[TYPE ItemState :
+STRUCT
+	InProcess	:	BOOL;			// item picked-up by robot & processing by workcenter 
+	Done		:	BOOL;			// item processing completed
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
