@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{b0957d05-e756-4ab9-917c-330dc6057d49}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	ItemCode			:	STRING(10);
+	ItemNo				:	INT;
+	
+	tonIn				:	TON;
+	ton01				:	TON;
+	ton02				:	TON;
+	ton03				:	TON;
+	ton04				:	TON;
+	
+	tpIn				:	TP;
+	tpM02In				:	TP;
+	tpM03In				:	TP;
+	tpM02Out			:	TP;
+	tpM03Out			:	TP;
+	tpM04Out			:	TP;
+	tpEolOut			:	TP;
+	Eol					:	BOOL;
+	rtrigEol			:	R_TRIG;
+	
+	Fifo01				:	Fifo;
+	Fifo02				:	Fifo;
+	Fifo03				:	Fifo;
+	Fifo04				:	Fifo;
+	FifoEol				:	Fifo;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// simulation for item inlet
+tonIn(IN:=NOT tonIn.Q, PT:=T#1600MS);
+
+// simulation for machine processing M1,M2,M3,M4
+ton01(IN:=NOT ton01.Q, PT:=T#3S);
+ton02(IN:=NOT ton02.Q, PT:=T#8S);
+ton03(IN:=NOT ton03.Q, PT:=T#6S);
+ton04(IN:=NOT ton04.Q, PT:=T#7S);
+
+// enf of line test ok
+rtrigEol(CLK:=Eol);
+
+
+Fifo01(QueueLength:=10);	// FIFO for M1
+Fifo02(QueueLength:=10);	// FIFO for M2
+Fifo03(QueueLength:=10);	// FIFO for M3
+Fifo04(QueueLength:=10);	// FIFO for M4
+FifoEol(QueueLength:=10);	// FIFO for End of Line station
+
+// timers for visualisation
+tpIn(PT:=T#500MS);
+tpIn.IN:=FALSE;
+
+tpM02In(PT:=T#500MS);
+tpM02In.IN:=FALSE;
+
+tpM03In(PT:=T#500MS);
+tpM03In.IN:=FALSE;
+
+tpM02Out(PT:=T#500MS);
+tpM02Out.IN:=FALSE;
+
+tpM03Out(PT:=T#500MS);
+tpM03Out.IN:=FALSE;
+
+tpM04Out(PT:=T#500MS);
+tpM04Out.IN:=FALSE;
+
+tpEolOut(PT:=T#500MS);
+tpEolOut.IN:=FALSE;
+	
+
+// item inlet into M1
+IF tonIn.Q AND NOT Fifo01.IsFull THEN
+	tpIn.IN := tonIn.Q;
+	// move item into M1 if buffer not full
+	ItemNo:=ItemNo+1;
+	ItemCode:=CONCAT('ITEM',INT_TO_STRING(ItemNo));
+	Fifo01.InsertToQueue(DataIn:=ItemCode);	
+END_IF
+
+
+// M1 out
+IF ton01.Q AND NOT Fifo01.IsEmpty THEN
+	IF Fifo02.NoOfDataPoints<Fifo03.NoOfDataPoints AND NOT Fifo02.IsFull THEN
+		// move item to M2
+		Fifo02.InsertToQueue(DataIn:=Fifo01.RemoveFromQueue());
+		tpM02In.IN:=ton01.Q;
+	ELSIF Fifo03.NoOfDataPoints<Fifo02.NoOfDataPoints AND NOT Fifo03.IsFull THEN
+		// move item to M3
+		Fifo03.InsertToQueue(DataIn:=Fifo01.RemoveFromQueue());
+		tpM03In.IN:=ton01.Q;
+	ELSIF Fifo02.NoOfDataPoints=Fifo03.NoOfDataPoints AND NOT Fifo03.IsFull THEN
+		// move item to M3 (M3 has faster processing time) 
+		Fifo03.InsertToQueue(DataIn:=Fifo01.RemoveFromQueue());
+		tpM03In.IN:=ton01.Q;
+	END_IF
+END_IF
+
+// M2 out
+IF ton02.Q AND NOT Fifo02.IsEmpty THEN
+	IF NOT Fifo04.IsFull THEN
+		Fifo04.InsertToQueue(DataIn:=Fifo02.RemoveFromQueue());
+		tpM02Out.IN:=ton02.Q;
+	END_IF
+END_IF
+
+
+// M3 out
+IF ton03.Q AND NOT Fifo03.IsEmpty THEN
+	IF NOT Fifo04.IsFull THEN
+		Fifo04.InsertToQueue(DataIn:=Fifo03.RemoveFromQueue());
+		tpM03Out.IN:=ton03.Q;
+	END_IF
+END_IF
+
+
+// M4 out
+IF ton04.Q AND NOT Fifo04.IsEmpty THEN 
+	IF NOT FifoEol.IsFull THEN
+		FifoEol.InsertToQueue(DataIn:=Fifo04.RemoveFromQueue());
+		tpM04Out.IN:=ton04.Q;
+	END_IF
+END_IF
+
+// M5 out
+IF rtrigEol.Q AND NOT FifoEol.IsEmpty THEN
+	FifoEol.RemoveFromQueue();
+	tpEolOut.IN:=rtrigEol.Q;
+END_IF
+
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
