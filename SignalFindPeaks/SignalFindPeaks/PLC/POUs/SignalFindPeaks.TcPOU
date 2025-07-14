@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="SignalFindPeaks" Id="{2db1a80c-ac4a-494e-ba33-2dc5ca785d7e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK SignalFindPeaks
+VAR_INPUT
+	Enable						:	BOOL;						// enable FB execution
+	VertThresh					:	REAL;						// minimum vertical distance between points to detect peaks
+	PlateauMax					: 	UINT;						// maximum number of points in flat top of a peak. If plateau is longer then this parameter, its not a peak but only flat signal.  
+END_VAR
+VAR CONSTANT
+	SampleSize					: 	DINT := 800;				// max. sample size. For 10ms task cycle = 8sec.
+END_VAR
+VAR
+	PeakSignalPresent			: 	ARRAY[0..SampleSize] OF DINT;		// array with one's on positions with peaks
+	UpBound						: 	DINT;								// max index of input signal array
+	LowBound					: 	DINT;								// min index of input signal array
+	Idx							: 	DINT;								// index in FOR loop
+	SubIdx						: 	DINT;								// sub index in FOR loop during plateau checking 
+	NoPeakIdx					:	DINT;								// temporary index for peak counter
+END_VAR
+
+VAR_IN_OUT
+	RawSignal					: 	ARRAY[*] OF REAL;					// input signal as array
+	PeakSignalIdx				: 	ARRAY[0..SampleSize] OF DINT;		// output - indexes of peaks in raw input signal
+	PeakSignalVal				: 	ARRAY[0..SampleSize] OF REAL;		// output - values of peaks 
+END_VAR
+
+VAR_OUTPUT
+	LastIdxRawSignal			: 	DINT;								// index of last peak in raw signal array
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* This FB detects peaks in incoming signal array 'RawSignal' *)
+
+IF ENABLE THEN
+	
+	MemSet(ADR(PeakSignalPresent),0,SIZEOF(UDINT) * (SampleSize));			// clear array with peak signal (prepare for new evaluation)
+	MemSet(ADR(PeakSignalIdx),0,SIZEOF(UDINT) * (SampleSize));				// clear array with peak indexes in RawSignal array
+	MemSet(ADR(PeakSignalVal),0,SIZEOF(UDINT) * (SampleSize));				// clear array with peak values from RawSignal array
+	
+	UpBound				:= UPPER_BOUND(RawSignal,1);						// find max index of input signal array
+	LowBound 			:= LOWER_BOUND(RawSignal,1);						// find min index of input signal array
+	NoPeakIdx 			:= 0;												
+	LastIdxRawSignal	:= 0;												
+	
+	
+	IF LowBound < UpBound AND UpBound-LowBound > 5 THEN
+			// iterate through all points in raw signal array
+			FOR Idx := LowBound+1 TO UpBound-1 BY 1 DO
+				// #1 if predecessor and successor of current signal point are less then signal point -> It's peak point
+				IF (RawSignal[Idx] > RawSignal[Idx-1] + VertThresh) AND  (RawSignal[Idx] > RawSignal[Idx+1] + VertThresh) THEN 
+					PeakSignalPresent[Idx] := 1;
+					PeakSignalIdx[NoPeakIdx] := Idx;
+					PeakSignalVal[NoPeakIdx] := RawSignal[Idx];
+					NoPeakIdx:=NoPeakIdx+1;
+				
+				// #2 predecessor is less and successor is equal to current signal pont 	
+				ELSIF (RawSignal[Idx]  > RawSignal[Idx-1] + VertThresh) AND (ABS(RawSignal[Idx] - RawSignal[Idx+1]) <0.001) THEN
+					// iterate right side area from current signal point
+					FOR SubIdx:= Idx+1 TO UpBound BY 1 DO
+						IF RawSignal[SubIdx] - RawSignal[Idx] > 0 THEN
+							// stop searching and exit when successor point is higher then current signal point. It can't be peak
+							EXIT;
+						// if successor is less then current point then its peak. 	
+						ELSIF (RawSignal[Idx] - RawSignal[SubIdx] > VertThresh) AND (SubIdx-Idx < PlateauMax) THEN
+							PeakSignalPresent[Idx] := 1;
+							PeakSignalIdx[NoPeakIdx] := Idx;
+							PeakSignalVal[NoPeakIdx] := RawSignal[Idx];
+							NoPeakIdx:=NoPeakIdx+1;
+							EXIT;
+						// if number of following equal points, higher then plateau_max then stop searching. Its not peak but flat area signal 
+						ELSIF SubIdx-Idx >  PlateauMax THEN
+							EXIT;
+						END_IF;	
+					END_FOR
+				END_IF;
+			END_FOR
+			
+			// indicate how many peaks detected
+			IF NoPeakIdx > 0 THEN
+				LastIdxRawSignal	:=	NoPeakIdx;
+			ELSE
+				LastIdxRawSignal	:= 0;
+			END_IF
+	END_IF	
+	
+	MemSet(ADR(RawSignal),0,SIZEOF(RawSignal));
+END_IF;
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
