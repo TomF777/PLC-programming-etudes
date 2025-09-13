@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL" Id="{8731a2f7-e9a9-4bb0-a6e9-4fad3a28db3a}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+(********************* TimeStamp *********************)
+	Unix_TimeStamp 			: ULINT;
+	
+(********************* Machine States *********************)
+	AutoMode 				: BOOL;
+	ManualMode 				: BOOL;
+	MachineProducing		: BOOL;
+	DoorGuardSts 			: BOOL;
+	ESTOP_NOK				: BOOL;
+	
+	WireCutSignal			: BOOL;		// command for cutting wire 
+	Robot_Error				: BOOL;
+	HeatingErrorDepot3		: BOOL;		// heating error on depot 3 (corner)
+	HeatingErrorDepot2		: BOOL;		// heating error on depot 2 (middle)
+	RobotRunMode			: BOOL;
+	WelderRunning			: BOOL;
+	WelderReady				: BOOL;
+	WelderHeatingOn			: BOOL;
+	LifeBeat				: BOOL;		// life bit 1 sec.
+	ConnectionOK			: BOOL;		// monitoring of LifeBeat
+	FieldbusOK				: BOOL;		// EtherCat communication OK.
+	
+
+
+(**********************************************************)
+	ProductOK: DINT;		// amount of finished OK product 
+	ProductNOK:	DINT;		// amount of NOK product
+	ProductCantNOK:	DINT;	// amount of NOK cant product 
+	
+	// Data from HMI (PS4800) at WB4
+	DataHmi2TwinCat							: ARRAY[1..4] OF DINT;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

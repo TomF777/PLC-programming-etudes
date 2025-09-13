@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Main_T10ms" Id="{6779098e-183c-40bc-9866-f079e3b788e4}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Main_T10ms
+VAR
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Simulation();
+
+Monitoring();
+
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

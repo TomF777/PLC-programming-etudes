@@ -1,0 +1,826 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.35" TcProjectVariant="Local" TcVersionFixed="true">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{61E1D0F9-17CD-6F72-1F2E-739132BB9C5B}" Namespace="Tc2_Standard" AutoDeleteType="true">R_TRIG</Name>
+			<Comment><![CDATA[
+	Rising Edge detection.
+]]></Comment>
+			<BitSize>128</BitSize>
+			<SubItem>
+				<Name>CLK</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ Signal to detect ]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>64</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Q</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ rising edge at signal detected ]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>72</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>M</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>80</BitOffs>
+				<Properties>
+					<Property>
+						<Name>conditionalshow</Name>
+					</Property>
+				</Properties>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>PouType</Name>
+					<Value>FunctionBlock</Value>
+				</Property>
+				<Property>
+					<Name>conditionalshow_all_locals</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{C0C4F63E-F81C-AB85-BF5D-AEABB41674A1}" Namespace="Tc2_Standard" AutoDeleteType="true">F_TRIG</Name>
+			<Comment><![CDATA[
+	Falling Edge detection.
+]]></Comment>
+			<BitSize>128</BitSize>
+			<SubItem>
+				<Name>CLK</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ signal to detect ]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>64</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Q</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ falling edge at signal detected ]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>72</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>M</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>80</BitOffs>
+				<Default>
+					<Bool>true</Bool>
+				</Default>
+				<Properties>
+					<Property>
+						<Name>conditionalshow</Name>
+					</Property>
+				</Properties>
+			</SubItem>
+			<Properties>
+				<Property>
+					<Name>PouType</Name>
+					<Value>FunctionBlock</Value>
+				</Property>
+				<Property>
+					<Name>conditionalshow_all_locals</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{0A404EE1-7C4C-52F3-736B-3CE7E416F30E}" AutoDeleteType="true">Implicit_Enum__ShapeMonitor__State</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<EnumInfo>
+				<Text><![CDATA[IDLE]]></Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[TRIGGER_STARTED]]></Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text><![CDATA[TRIGGER_STOPPED]]></Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<Properties>
+				<Property>
+					<Name>qualified_only</Name>
+				</Property>
+				<Property>
+					<Name>generate_implicit_init_function</Name>
+				</Property>
+			</Properties>
+		</DataType>
+		<DataType>
+			<Name GUID="{5C68A386-90D5-42F1-FD3C-AF5DB22D9C43}" AutoDeleteType="true">ShapeMonitor</Name>
+			<BitSize>90688</BitSize>
+			<SubItem>
+				<Name>AnalogIn</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<BitSize>32</BitSize>
+				<BitOffs>64</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>TriggerSensor</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>96</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Enable</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>104</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Reset</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ reset algorithm]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>112</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Input</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>BaseInCalculation</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ base model during calculation]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>120</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>BaseCompleted</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ model base calculation completed]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>128</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>SumSquaredError</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<Comment><![CDATA[ SSE - sumed squared error]]></Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>160</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Busy</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ shape evaluation in progress ]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>192</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>Done</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+				<Comment><![CDATA[ shape evaluated]]></Comment>
+				<BitSize>8</BitSize>
+				<BitOffs>200</BitOffs>
+				<Properties>
+					<Property>
+						<Name>ItemType</Name>
+						<Value>Output</Value>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>rtTriggerSensor</Name>
+				<Type GUID="{61E1D0F9-17CD-6F72-1F2E-739132BB9C5B}" Namespace="Tc2_Standard">R_TRIG</Type>
+				<Comment><![CDATA[ detect rising edge of trigger sensor]]></Comment>
+				<BitSize>128</BitSize>
+				<BitOffs>256</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>ftTriggerSensor</Name>
+				<Type GUID="{C0C4F63E-F81C-AB85-BF5D-AEABB41674A1}" Namespace="Tc2_Standard">F_TRIG</Type>
+				<Comment><![CDATA[ detect falling edge of trigger sensor]]></Comment>
+				<BitSize>128</BitSize>
+				<BitOffs>384</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>rtReset</Name>
+				<Type GUID="{61E1D0F9-17CD-6F72-1F2E-739132BB9C5B}" Namespace="Tc2_Standard">R_TRIG</Type>
+				<Comment><![CDATA[ detect rising edge of reset signal]]></Comment>
+				<BitSize>128</BitSize>
+				<BitOffs>512</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>State</Name>
+				<Type GUID="{0A404EE1-7C4C-52F3-736B-3CE7E416F30E}">Implicit_Enum__ShapeMonitor__State</Type>
+				<Comment><![CDATA[ state machine]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>640</BitOffs>
+				<Properties>
+					<Property>
+						<Name>implicit_enum_type</Name>
+					</Property>
+				</Properties>
+			</SubItem>
+			<SubItem>
+				<Name>arrShapeSamples</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>200</Elements>
+				</ArrayInfo>
+				<Comment><![CDATA[ real-time analog samples catched at each PLC scan				]]></Comment>
+				<BitSize>6400</BitSize>
+				<BitOffs>672</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>IdxMeasureSample</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ index of real-time measured sample ]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>7072</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>arrBaseSamples</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>11</Elements>
+				</ArrayInfo>
+				<ArrayInfo Level="1">
+					<LBound>0</LBound>
+					<Elements>200</Elements>
+				</ArrayInfo>
+				<Comment><![CDATA[ collected real-time signal shapes in base shapes ]]></Comment>
+				<BitSize>70400</BitSize>
+				<BitOffs>7104</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>arrNoSamplesInBaseShape</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>11</Elements>
+				</ArrayInfo>
+				<Comment><![CDATA[ number of samples in each base shape]]></Comment>
+				<BitSize>176</BitSize>
+				<BitOffs>77504</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>arrBase</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>200</Elements>
+				</ArrayInfo>
+				<Comment><![CDATA[ averaged base shapes array ]]></Comment>
+				<BitSize>6400</BitSize>
+				<BitOffs>77696</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>arrResult</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<ArrayInfo>
+					<LBound>0</LBound>
+					<Elements>200</Elements>
+				</ArrayInfo>
+				<Comment><![CDATA[ array with squared diff. between base and incoming new shape]]></Comment>
+				<BitSize>6400</BitSize>
+				<BitOffs>84096</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>NoBaseShapes</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ number of collected shapes in 'base']]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90496</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>IdxBaseShape</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ idx for shape iteration]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90512</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>IdxSample</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ idx for sample iteration]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90528</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>MaxBaseLength</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ max length of shapes in base model]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90544</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SampleLength</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ length(num of samples) of evaluated shape]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90560</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>Total</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000D}">REAL</Type>
+				<Comment><![CDATA[ temporary var]]></Comment>
+				<BitSize>32</BitSize>
+				<BitOffs>90592</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>SHAPES_IN_BASE</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ number of shape samples in base]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90624</BitOffs>
+				<Default>
+					<Value>10</Value>
+				</Default>
+			</SubItem>
+			<SubItem>
+				<Name>SAMPLES_IN_SHAPE</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000005}">UINT</Type>
+				<Comment><![CDATA[ max number of samples in one shape]]></Comment>
+				<BitSize>16</BitSize>
+				<BitOffs>90640</BitOffs>
+				<Default>
+					<Value>199</Value>
+				</Default>
+			</SubItem>
+			<Method>
+				<Name>resetAlgorithm</Name>
+				<ReturnType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</ReturnType>
+				<ReturnBitSize>8</ReturnBitSize>
+			</Method>
+			<Properties>
+				<Property>
+					<Name>PouType</Name>
+					<Value>FunctionBlock</Value>
+				</Property>
+				<Property>
+					<Name>contains_implicit_enum</Name>
+				</Property>
+			</Properties>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{609397BE-6C3A-4A61-9E59-5CBD51EF45B6}" Target64Bit="true" ShowHideConfigurations="#x1c6">
+		<System>
+			<Settings MaxCpus="4" NonWinCpus="2">
+				<Cpu CpuId="2"/>
+				<Cpu CpuId="3"/>
+			</Settings>
+			<Licenses IgnoreProjectLicenses="true">
+				<Target BkhfOrder="01151948">
+					<ManualSelect>{B27B051A-CA6A-42EA-833E-82CC92903D83}</ManualSelect>
+					<ManualSelect>{66689887-CCBD-452C-AC9A-039D997C6E66}</ManualSelect>
+				</Target>
+			</Licenses>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask_10ms</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project GUID="{F5F07BB2-8108-4363-9BAD-7A572E185B6F}" Name="ShapeMonitor" PrjFilePath="ShapeMonitor\ShapeMonitor.plcproj" TmcFilePath="ShapeMonitor\ShapeMonitor.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" CopyTmcToTarget="true" SymbolicMapping="true">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="ShapeMonitor\ShapeMonitor.tmc" TmcHash="{F318988C-F878-7D38-B207-65646736859D}">
+					<Name>ShapeMonitor Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask_10ms Outputs</Name>
+						<Var>
+							<Name>GVL_outputs.DataEthNetIP_OUTPUT_DINT0</Name>
+							<Comment><![CDATA[ Data to Allen Bradley over EtherNet/IP]]></Comment>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>GVL_outputs.DataEthNetIP_OUTPUT_DINT1</Name>
+							<Type>DINT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="8" AreaNo="4">
+						<Name>PlcTask_10ms Retains</Name>
+						<Var>
+							<Name>Monitoring.ShapeMonitor01</Name>
+							<Type GUID="{5C68A386-90D5-42F1-FD3C-AF5DB22D9C43}">ShapeMonitor</Type>
+							<InOut>7</InOut>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2021-05-07T13:32:34">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^PPS_L1^PPS_L1 Instance" Type="2">
+							<OwnerB Name="TIID^Device1 (Profinet Device)^l1-oi-ipc-eth1">
+								<Link VarA="GVL.SensorsToPN_10Float_Float0" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[0]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float1" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[1]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float2" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[2]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float3" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[3]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float4" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[4]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float5" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[5]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float6" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[6]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float7" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[7]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float8" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[8]" RestoreInfo="ANotFound"/>
+								<Link VarA="GVL.SensorsToPN_10Float_Float9" TypeA="REAL" InOutA="1" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="API^Term 5 (10 Float32 Input)^Subterm 7 (10 Float32 Input)^Outputs^1 Float32 Input[9]" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2021-06-01T16:29:41">
+						<OwnerA Name="InputDst" Prefix="TIPC^PPS_L1^PPS_L1 Instance" Type="1">
+							<OwnerB Name="TIID^Device2 (EtherCAT)^BielomatikCabinet (EK1100)^Term4 (EL3443)">
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_1" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 1" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_10" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 10" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_11" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 11" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_12" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 12" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_13" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 13" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_14" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 14" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_15" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 15" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_16" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 16" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_17" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 17" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_18" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 18" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_19" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 19" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_2" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 2" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_20" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 20" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_3" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 3" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_4" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 4" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_5" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 5" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_6" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 6" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_7" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 7" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_8" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 8" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_DPM_Data_Data_9" TypeA="UDINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 9" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Frequency_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Frequency Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Frequency_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Frequency Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Grid_Direction" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Grid Direction" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Neutral_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Neutral Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Neutral_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Neutral Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Status^Power Quality Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Power Quality Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Power Quality Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_System_State" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^System State" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_TxPDO_State" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^TxPDO State" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Index_1_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value In^Index 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Index_2_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value In^Index 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Index_3_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value In^Index 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Index_4_ULINT" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value In^Index 4 ULINT" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Variant Value In^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Value_1_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Variant Value In^Value 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Value_2_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Variant Value In^Value 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Value_3_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Variant Value In^Value 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Variant_Value_In_Value_4_ULINT" TypeA="ULINT" InOutA="0" ParentTypeA="MDP5001_341_I_93A85FAB" GuidA="{18071995-0000-0000-0000-00000000000B}" VarB="Total Variant Value In^Value 4 ULINT" RestoreInfo="ANotFound"/>
+							</OwnerB>
+							<OwnerB Name="TIID^Device2 (EtherCAT)^BielomatikCabinet (EK1100)^Term5 (EL3446)">
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Index_1_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value In^Index 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Index_2_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value In^Index 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Index_3_REAL" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value In^Index 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Index_4_ULINT" TypeA="UINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value In^Index 4 ULINT" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="DPM Variant Value In^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Value_1_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="DPM Variant Value In^Value 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Value_2_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="DPM Variant Value In^Value 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Value_3_REAL" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="DPM Variant Value In^Value 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_DPM_Variant_Value_In_Value_4_ULINT" TypeA="ULINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000B}" VarB="DPM Variant Value In^Value 4 ULINT" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I1 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I1 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I1 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I1 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I1 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I1_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I1 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I2 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I2 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I2 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I2 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I2 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I2_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I2 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I3 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I3 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I3 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I3 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I3 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I3_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I3 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I4 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I4 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I4 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I4 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I4 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I4_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I4 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I5 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I5 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I5 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I5 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I5 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I5_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I5 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Active_Energy" TypeA="DINT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="I6 Channel^Active Energy" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I6 Channel^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I6 Channel^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I6 Channel^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_DPM_Inaccurate" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^DPM Inaccurate" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_DPM_Timeout" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^DPM Timeout" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Reactive_Power_Fundamental" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="I6 Channel^Reactive Power Fundamental" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Reactive_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Reactive Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_Reactive_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^Reactive Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Input^MDP5001_342_I6_Channel_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_342_I_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="I6 Channel^TxPDO Toggle" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+						<OwnerA Name="OutputSrc" Prefix="TIPC^PPS_L1^PPS_L1 Instance" Type="2">
+							<OwnerB Name="TIID^Device2 (EtherCAT)^BielomatikCabinet (EK1100)^Term4 (EL3443)">
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Output^MDP5001_341_Total_Interval_Reset_Interval" TypeA="BIT" InOutA="1" ParentTypeA="MDP5001_341_O_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Interval^Reset Interval" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Output^MDP5001_341_Total_Variant_Value_Out_Index_1_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_341_O_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value Out^Index 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Output^MDP5001_341_Total_Variant_Value_Out_Index_2_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_341_O_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value Out^Index 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Output^MDP5001_341_Total_Variant_Value_Out_Index_3_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_341_O_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value Out^Index 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3443DPM.stEL3443_IO.MDP5001_341_Output^MDP5001_341_Total_Variant_Value_Out_Index_4_ULINT" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_341_O_93A85FAB" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Total Variant Value Out^Index 4 ULINT" RestoreInfo="ANotFound"/>
+							</OwnerB>
+							<OwnerB Name="TIID^Device2 (EtherCAT)^BielomatikCabinet (EK1100)^Term5 (EL3446)">
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_1" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 1" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_10" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 10" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_11" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 11" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_12" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 12" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_13" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 13" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_14" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 14" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_15" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 15" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_16" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 16" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_17" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 17" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_18" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 18" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_19" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 19" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_2" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 2" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_20" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 20" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_3" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 3" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_4" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 4" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_5" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 5" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_6" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 6" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_7" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 7" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_8" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 8" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Data_Data_9" TypeA="UDINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000008}" VarB="DPM Data^Data 9" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Variant_Value_Out_Index_1_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value Out^Index 1 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Variant_Value_Out_Index_2_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value Out^Index 2 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Variant_Value_Out_Index_3_REAL" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value Out^Index 3 REAL" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.fbEL3446_wEL3443.stEL3446_IO.MDP5001_342_Output^MDP5001_342_DPM_Variant_Value_Out_Index_4_ULINT" TypeA="UINT" InOutA="1" ParentTypeA="MDP5001_342_O_066CA8C6" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="DPM Variant Value Out^Index 4 ULINT" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2021-12-29T11:25:18">
+						<OwnerA Name="InputDst" Prefix="TIPC^PPS_L2^PPS_L2 Instance" Type="1">
+							<OwnerB Name="TIID^Device2 (EtherCAT)^BielomatikCabinet (EK1100)^Term 8 (EL3443)">
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Basic_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Basic^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Basic_Voltage" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Basic^Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Power_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Power^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Power_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Power^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Power_Power_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Power^Power Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Power_Reactive_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L1 Power^Reactive Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L1 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L1_Timing_Voltage_Last_Zero_Crossing" TypeA="ULINT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000B}" VarB="L1 Timing^Voltage Last Zero Crossing" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Basic_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Basic^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Basic_Voltage" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Basic^Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Power_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Power^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Power_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Power^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Power_Power_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Power^Power Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Power_Reactive_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L2 Power^Reactive Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L2 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L2_Timing_Voltage_Last_Zero_Crossing" TypeA="ULINT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000B}" VarB="L2 Timing^Voltage Last Zero Crossing" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Basic_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Basic^Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Basic_Voltage" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Basic^Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Power_Active_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^Active Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Power_Apparent_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^Apparent Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Power_Power_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^Power Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Power_Reactive_Power" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="L3 Power^Reactive Power" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Inaccurate_Current" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Inaccurate Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Inaccurate_Voltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Inaccurate Voltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Overcurrent" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Overcurrent" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Overvoltage" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Overvoltage" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Status_Voltage_Sign_Bit" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="L3 Status^Voltage Sign Bit" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_L3_Timing_Voltage_Last_Zero_Crossing" TypeA="ULINT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000B}" VarB="L3 Timing^Voltage Last Zero Crossing" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Basic_Calculated_Neutral_Line_Current" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^Calculated Neutral Line Current" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Basic_Frequency" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^Frequency" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Basic_Power_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Basic^Power Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Active_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Active Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Active_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Active Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Apparent_Power_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Apparent Power Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Apparent_Power_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Apparent Power Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Frequency_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Frequency Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Frequency_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Frequency Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Grid_Direction" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Grid Direction" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Neutral_Current_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Neutral Current Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Neutral_Current_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Neutral Current Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Factor" TypeA="REAL" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-00000000000D}" VarB="Total Status^Power Quality Factor" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Guard_Error" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Power Quality Guard Error" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_Power_Quality_Guard_Warning" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^Power Quality Guard Warning" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_System_State" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^System State" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_TxPDO_State" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^TxPDO State" RestoreInfo="ANotFound"/>
+								<Link VarA="Main_500us.fbEL3443.stEL3443_IO.MDP5001_341_Input^MDP5001_341_Total_Status_TxPDO_Toggle" TypeA="BIT" InOutA="0" ParentTypeA="MDP5001_341_I_7FF5D4A6" GuidA="{18071995-0000-0000-0000-000000000010}" VarB="Total Status^TxPDO Toggle" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<Contexts>
+						<Context>
+							<Id NeedCalleeCall="true">0</Id>
+							<Name>PlcTask_10ms</Name>
+							<ManualConfig>
+								<OTCID>#x02010030</OTCID>
+							</ManualConfig>
+							<Priority>20</Priority>
+							<CycleTime>10000000</CycleTime>
+						</Context>
+					</Contexts>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x08502003"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Variants SpecificLocalBootFolder="true">
+			<Variant>
+				<Name>Local</Name>
+			</Variant>
+			<Variant>
+				<Name>Machine</Name>
+			</Variant>
+		</Variants>
+	</Project>
+</TcSmProject>

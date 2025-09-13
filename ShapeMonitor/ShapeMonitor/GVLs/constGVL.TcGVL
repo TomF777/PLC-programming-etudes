@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="constGVL" Id="{0d6b5618-3a41-48b6-8867-5446470a3816}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	//ipHostAddress	: STRING		:= '192.168.1.170';
+	ipHostAddress	: STRING		:= '10.1.226.41';
+	
+	HostPort		: UINT			:= 1883;
+	UserName		: STRING		:= 'mqttbroker';
+	//UserPassword	: STRING		:= 'LoopEdge.123';
+	UserPassword	: STRING		:= 'PLWRO@mqtt';
+	
+	WorkCenter 		: STRING(30)	:= 'PLPSDWB1';
+	LineName 		: STRING(30)	:= 'PSD_WB';
+	MachineName01 	: STRING(30)	:= 'WB1';
+	MachineTopic_Status01 : STRING	:= 'MachineStatus';
+	
+	// Config for InfluxDB
+	//ActuatorOperTimes_InfluxMeas 	: STRING(50) := 'ActuatorOperTimes';
+	VibAccelAnomaly_InfluxMeas 		: STRING(50) := 'VibAccelAnalytics';
+	VibVeloAnomaly_InfluxMeas 		: STRING(50) := 'VibVeloAnalytics';
+	MachineState_InfluxMeas 		: STRING(50) := 'MachineStatus';
+	EdgeDiag_InfluxMeas 			: STRING(50) := 'EdgeGateway';
+	FlowSensor_InfluxMeas 			: STRING(50) := 'FlowSensor';
+	PressureSensor_InfluxMeas		: STRING(50) := 'PressureSensor';
+	PositionSensor_InfluxMeas		: STRING(50) := 'PositionSensor';
+	ShapeCorrelation_InfluxMeas		: STRING(50) := 'ShapeCorrelation';
+	//TempHumidSensor_InfluxMeas 	: STRING(50) := 'TempHumidSensor';
+	//ElectricalData_InfluxMeas		: STRING(50) := 'ElectricalMeasurement';
+	
+	BF1	:STRING			:= 'BF1';	// przepływ powietrza - zasilanie maszyny
+	
+	BP1	:STRING			:= 'BP1';	// cisnienie powietrza  - docisk rolek na reduktorem
+	BP2	:STRING			:= 'BP2';	// cisnienie powietrza  - odwijanie drutu
+	BP3	:STRING			:= 'BP3';	// cisnienie powietrza  - przy enkoderze
+	
+	// separate vibration sensors 
+	BS1 			:STRING			:= 'BS1';		//	wibracje przy kole zębatym - napęd	
+	BS2 			:STRING			:= 'BS2';		//	wibracje przy kole zębatym - na obudowie
+	BS3				:STRING			:= 'BS3';		// wibracje przy AccuLathe
+	
+	BG01			:STRING			:='BG01';		// polożenie ciągle ramienia na odwijaku
+	BG02			:STRING			:='BG02';		// połozenie binarne ramienia na odwijaku
+	
+END_VAR
+
+VAR_GLOBAL CONSTANT
+	// *******************Global Const ************************
+	LeverArmShapeMaxNoSample: UINT := 200;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

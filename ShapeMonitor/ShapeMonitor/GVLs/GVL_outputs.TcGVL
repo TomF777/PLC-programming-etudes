@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL_outputs" Id="{fb385b2f-e42e-4666-9002-a600bc227bd1}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	// Data to Allen Bradley over EtherNet/IP
+	DataEthNetIP_OUTPUT_DINT0				AT%Q*: DINT;
+	DataEthNetIP_OUTPUT_DINT1				AT%Q*: DINT;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
