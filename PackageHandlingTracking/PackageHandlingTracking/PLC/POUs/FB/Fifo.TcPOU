@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Fifo" Id="{9405eb85-974b-4157-ad65-4611c5335cb9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Fifo
+
+VAR_OUTPUT
+	ErrorMsg			:	STRING(50);	// error message
+	QueueFull			:	Bool;
+	QueueEmpty			:	BOOL;
+END_VAR
+
+VAR CONSTANT
+	QueueMin			: 	INT:=0;
+	QueueMax			:	INT:=29;
+END_VAR
+
+VAR
+	ptrHead				:	INT ;		// pointer to first element (head)
+	ptrTail				:	INT ; 		// pointer to last element (tail) 
+	Idx					:	INT;
+	InitBit				:	BOOL:=TRUE;
+	QueueSize			:	INT;		// size of circular queue
+	QueueSizeOk			:	BOOL;		
+	Queue				:	ARRAY[QueueMin..QueueMax] OF REAL;
+	// test:
+	QueueLength			:	INT:=8;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+This FB acts as FIFO i.e. circular queue.
+Size of the queue must be customized with constants QueueMin and QueueMax. 
+*)
+IF InitBit THEN
+
+	InitBit := FALSE;
+	
+	IF QueueMax > QueueMin THEN
+		ptrHead := -1;
+		ptrTail := -1;
+		QueueSize := TO_INT(SIZEOF(Queue) / SIZEOF(REAL));
+		QueueSizeOk := TRUE;
+	END_IF
+END_IF
+]]></ST>
+    </Implementation>
+    <Method Name="ClearQueue" Id="{238cfcec-716c-4fd8-b84c-e305bf6fb4b7}">
+      <Declaration><![CDATA[METHOD ClearQueue : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(* reinit the queue *)
+
+IF QueueSizeOk THEN
+	ptrHead := -1;
+	ptrTail := -1;
+	
+	FOR Idx := QueueMin TO QueueMax DO
+		Queue[Idx] := 0;
+	END_FOR
+
+	ErrorMsg := '';
+	QueueEmpty := FALSE;
+	QueueFull := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InsertToQueue" Id="{454f4482-53c4-4405-bfa7-85743104aef9}">
+      <Declaration><![CDATA[METHOD InsertToQueue : BOOL
+VAR_INPUT
+	DataIn		:	REAL;			// data to insert into circular queue
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Insert new data into queue
+
+IF QueueSizeOk THEN 
+	IF IsFull THEN
+		// queue is full. can't insert new data
+		ErrorMsg := 'Queue is full. Can not insert new data';
+		QueueFull := TRUE;
+	ELSIF IsEmpty THEN
+		ErrorMsg := '';
+		QueueFull := FALSE;
+		ptrHead := 0;
+		ptrTail := 0;
+		Queue[ptrTail] := DataIn;
+	ELSE 
+		ErrorMsg := '';
+		QueueFull := FALSE;
+		IF (ptrTail+1) MOD QueueLength <= QueueLength THEN
+			ptrTail := (ptrTail + 1) MOD QueueLength;
+			Queue[ptrTail] := DataIn;	
+		END_IF
+	
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsEmpty" Id="{916dbf0c-682b-49ed-b576-148864ee3e03}">
+      <Declaration><![CDATA[PROPERTY IsEmpty : BOOL]]></Declaration>
+      <Get Name="Get" Id="{3676efeb-3079-43b1-8b02-3585cc20ed1a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsEmpty := ptrHead = -1 AND ptrTail = -1;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsFull" Id="{ded49d7b-b529-4060-8c0b-56118febabfa}">
+      <Declaration><![CDATA[PROPERTY IsFull : BOOL]]></Declaration>
+      <Get Name="Get" Id="{5b2dff58-8f28-4f15-b183-3eb3a3285d62}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsFull := ptrHead = (ptrTail + 1) MOD QueueLength;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="NoOfDataPoints" Id="{3cb1ca9a-ccb7-432f-84b1-ffc2167b56c7}">
+      <Declaration><![CDATA[PROPERTY NoOfDataPoints : INT]]></Declaration>
+      <Get Name="Get" Id="{21547c07-9f80-4c0a-81cc-ad26afc9bfbb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[// number of data points in queue
+IF ptrTail>ptrHead THEN
+	NoOfDataPoints:=ABS(ptrTail - ptrHead)+1;
+ELSIF ptrTail<ptrHead THEN
+	NoOfDataPoints:=(ptrTail+1) + (QueueLength-ptrHead);
+ELSE
+	// ptrTail=ptrHead
+	NoOfDataPoints:=0;
+END_IF
+
+
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="RemoveFromQueue" Id="{b34d572d-e867-4217-8026-55899ab7963c}">
+      <Declaration><![CDATA[METHOD RemoveFromQueue : Real;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[(* remove one data from the queue *)
+
+IF QueueSizeOk THEN
+	IF IsEmpty THEN							// zero element in queue
+		ErrorMsg := 'Queue is empty';
+		QueueEmpty := TRUE;
+	ELSIF ptrHead=ptrTail THEN				// only one element in queue
+		ErrorMsg := '';
+		QueueEmpty := FALSE;
+		RemoveFromQueue := Queue[ptrHead];
+		Queue[ptrHead]:=0;
+		ptrHead := -1;
+		ptrTail := -1;
+	ELSE									// more then one element in queue
+		ErrorMsg := '';
+		QueueEmpty := FALSE;
+		IF (ptrHead + 1) MOD QueueLength <= QueueLength THEN
+			RemoveFromQueue := Queue[ptrHead];
+			Queue[ptrHead]:=0;
+			ptrHead := (ptrHead + 1) MOD QueueLength;
+		END_IF
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

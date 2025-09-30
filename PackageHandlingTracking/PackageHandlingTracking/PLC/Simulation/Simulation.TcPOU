@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Simulation" Id="{269cf3ec-ef1a-4104-8968-479016c9191e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Simulation
+VAR
+	Drive01			:	DriveSimulator;
+	CmdDrv01		:	BOOL;
+	ProductPresent	:	BOOL;
+	ProductType		:	INT;
+	RndGen			:	Drand;
+	RndNum			:	LREAL;
+	tp01			:	TP;
+	tp02			:	TP;
+	rtrig01			:	R_TRIG;
+	tpProductTypeRead	:	TP;
+
+	tonProdType1Dropped: TON;
+	tonProdType2Dropped: TON;
+	tonProdType3Dropped: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// simulate conveyor drive
+Drive01(CmdRun:=CmdDrv01 AND NOT Main.tpDrvStop.Q , EncoderRawData=> );
+
+// pulse generation for product availability 
+IF Drive01.DrvRunning THEN
+	tp01(IN:=NOT tp02.Q , PT:=T#15S , Q=> , ET=> );
+	tp02(IN:=NOT tp01.Q , PT:=T#1.5S , Q=> , ET=> );
+	rtrig01(CLK:=tp02.Q);
+ELSE
+	tp01(IN:=FALSE);
+	tp02(IN:=FALSE);
+END_IF;
+
+//simulate product type reader
+tpProductTypeRead(IN:=rtrig01.Q, PT:=T#600MS);
+
+// simulate frequently product generation when drive is running
+IF Drive01.DrvRunning  AND rtrig01.Q THEN	
+	RndGen(Seed:=2);
+	RndNum := RndGen.Num;
+	IF RndNum < 0.5 THEN
+		ProductType := 1;
+	ELSIF RndNum < 0.8 THEN
+		ProductType := 2;
+	ELSE
+		ProductType := 3;
+	END_IF
+	
+END_IF
+
+// simulate product presence and product type during pulse=TRUE
+ProductPresent := Drive01.DrvRunning AND tp02.Q;
+
+
+// simulate sensors for dropping products
+tonProdType1Dropped(IN:=MAIN.ConveyorTracking01.DiverterCmd, 
+					PT:=T#700MS, 
+					Q=>, 
+					ET=> );
+
+tonProdType2Dropped(IN:=MAIN.ConveyorTracking02.DiverterCmd, 
+					PT:=T#700MS, 
+					Q=>, 
+					ET=> );
+					
+tonProdType3Dropped(IN:=MAIN.ConveyorTracking03.DiverterCmd, 
+					PT:=T#700MS, 
+					Q=>, 
+					ET=> );]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ShiftRegister" Id="{d59f4023-2edf-4c6c-aaa4-dcdbd78a0931}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ShiftRegister
+VAR_INPUT
+	Data			: 	BOOL;
+	ProductType		:	INT;
+	Clk				: 	BOOL;
+	Rst				: 	BOOL;
+END_VAR
+
+VAR
+	rtrigClk 		: 	R_TRIG;
+	Idx				:	UINT;
+END_VAR
+
+VAR_IN_OUT
+	arRegister			:	ARRAY[0..500] OF stShiftRegData;
+END_VAR
+
+VAR_OUTPUT
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Shift register for complex(STRUCT) data type
+
+Each CLK signal stores 'Data' and 'ProductType'
+into first position of the register as STRUCT data type.
+All other entries from the register will be then shifted by one position. 
+*)
+
+// detect rising edge on clk signal
+rtrigClk(clk := Clk);
+
+IF rtrigClk.Q THEN
+	FOR Idx := 500 TO 1 BY -1 DO
+		arRegister[Idx] := arRegister[Idx-1];
+	END_FOR
+	arRegister[0].ProductSts := Data;
+	arRegister[0].ProductType := ProductType;
+	
+END_IF
+
+IF Rst THEN
+	MEMSET(ADR(arRegister), 0, SIZEOF(arRegister) );
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

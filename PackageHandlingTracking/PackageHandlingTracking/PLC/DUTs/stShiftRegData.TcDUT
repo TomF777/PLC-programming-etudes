@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <DUT Name="stShiftRegData" Id="{fb74aea2-ea63-4a02-b3f6-de59033b354d}">
+    <Declaration><![CDATA[(*Shift Register Data Structure*)
+TYPE stShiftRegData :
+STRUCT
+	ProductSts	:	BOOL;			// True=product present
+	ProductType	:	INT:=-1;		// 1=big product; 2=middle product; 3=small product
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
