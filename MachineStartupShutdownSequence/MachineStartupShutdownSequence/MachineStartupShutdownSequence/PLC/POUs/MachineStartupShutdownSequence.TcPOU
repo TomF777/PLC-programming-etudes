@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MachineStartupShutdownSequence" Id="{f5e96cea-6910-45d4-825f-775ebb5f984a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK MachineStartupShutdownSequence
+VAR_INPUT
+	Startup					:	BOOL;
+	Shutdown				:	BOOL;
+END_VAR
+VAR_OUTPUT
+	StartupRun				:	BOOL;
+	ShutdownRun				:	BOOL;
+END_VAR
+VAR
+	StartupIndex 			: INT := 0;		// Tracks the current step in the process.
+	IdxHeat, IdxCool		: UINT;			// loop index
+    TimerHeating 			: TON;          // Timer for heating station activation delay.
+    TimerCooling 			: TON;          // Timer for cooling station activation delay.
+    TimerFeeder 			: TON;          // Timer for feeder activation delay.
+    TimerCutting 			: TON;          // Timer for cutter synchronization delay.
+    HeatingStation 			: ARRAY[1..8] OF BOOL := [8(FALSE)];
+	CoolStation				: ARRAY[1..8] OF BOOL := [8(FALSE)];
+    FeederUnit1 			: BOOL := FALSE;	// Feeder unit 1 control.
+    FeederUnit2 			: BOOL := FALSE;    // Feeder unit 2 control.
+    HorizontalCutter 		: BOOL := FALSE;    // Horizontal cutter control.
+    VerticalCutter 			: BOOL := FALSE;    // Vertical cutter control.
+    WindingTension 			: REAL;             // Tension value in the raw material (N).
+    TensionSetpoint 		: REAL := 5.0;      // Tension setpoint value.
+	
+    ShutdownIndex 			: INT := 0;          // Tracks the current step in the shutdown process.
+    TimerShutdown 			: TON;               // General timer for shutdown delays.
+    HeaterOffDelay 			: TIME := T#2S;    	 // Delay for cooling down heaters.
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Startup AND NOT StartupRun THEN
+	StartupRun := TRUE;
+	ShutdownRun := FALSE;
+	IdxHeat := 0;
+	IdxCool := 0;
+END_IF
+
+IF StartupRun THEN
+	THIS^.StartUpSequence();
+END_IF
+
+
+IF Shutdown AND NOT ShutdownRun THEN
+	ShutdownRun := TRUE;
+	StartupRun := FALSE;
+	IdxHeat := 0;
+	IdxCool := 0;
+END_IF
+
+IF ShutdownRun THEN
+	THIS^.ShutDownSequence();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="ShutDownSequence" Id="{98e7c991-d774-4b39-afc2-3f39e03d1dc4}">
+      <Declaration><![CDATA[METHOD ShutDownSequence : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Shutdown Sequence
+CASE ShutdownIndex OF
+    // Step 0: Stop Cutters First
+    0:
+        HorizontalCutter := FALSE; 				// Stop horizontal cutter.
+        VerticalCutter := FALSE;   				// Stop vertical cutter.
+        TimerShutdown(IN := TRUE, PT := T#2S); 	// Wait 2 seconds.
+        IF TimerShutdown.Q THEN
+			TimerShutdown(IN := FALSE);
+            ShutdownIndex := 10; 				// Move to next step.
+        END_IF
+
+    // Step 10: Stop Feeder Units
+    10:
+        FeederUnit1 := FALSE; 					// Stop feeder unit 1.
+        FeederUnit2 := FALSE; 					// Stop feeder unit 2.
+        TimerShutdown(IN := TRUE, PT := T#2S); 	// Wait 2 seconds.
+        IF TimerShutdown.Q THEN
+			TimerShutdown(IN := FALSE);
+            ShutdownIndex := 20; 				// Move to cooling station shutdown.
+        END_IF
+
+    // Step 20: Deactivate Cooling Stations Sequentially
+    20:
+		TimerShutdown(IN := IdxCool < 7, PT := T#1S); // Wait 1 seconds between stations.
+		IF TimerShutdown.Q THEN
+        	TimerShutdown(IN := FALSE);
+			IdxCool := IdxCool + 1;
+			CoolStation[IdxCool] := FALSE; 			// Deactivate each cooling station.
+        END_IF
+			
+        // Move to heating station shutdown.
+		ShutdownIndex := SEL(IdxCool > 6, 20, 30);
+
+    // Step 3: Deactivate Heating Stations Sequentially
+    30:
+		TimerShutdown(IN := IdxHeat < 7, PT := HeaterOffDelay); // Wait for heating delay.
+		IF TimerShutdown.Q THEN
+			TimerShutdown(IN := FALSE);
+			IdxHeat := IdxHeat + 1;
+			HeatingStation[IdxHeat] := FALSE; // Deactivate each heating station.
+		END_IF
+		
+		IF IdxHeat > 6 THEN
+			// Reset for next shutdown/startup
+			ShutdownRun := FALSE;
+			ShutdownIndex := 0;
+			StartupIndex := 0; 
+		ELSE 
+			ShutdownIndex := 30;
+		END_IF
+	
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartUpSequence" Id="{ff655f6c-3c8f-4d66-9412-90861fc512d3}">
+      <Declaration><![CDATA[METHOD StartUpSequence : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Start-up Sequence
+CASE StartupIndex OF
+    // Step 0: Start Heating Stations Sequentially
+    0:	
+		TimerHeating(IN := IdxHeat < 7, PT := T#1S); 	// Wait 1 seconds between stations.
+		IF TimerHeating.Q THEN
+        	TimerHeating(IN := FALSE);
+			IdxHeat := IdxHeat + 1;
+			HeatingStation[IdxHeat] := TRUE; 			// Activate heating station.
+        END_IF
+		
+		// Move to next step once all stations are active.
+		StartupIndex := SEL(IdxHeat > 6, 0, 10);
+
+    // Step 10: Activate Feeder Units and Set Tension
+    10:
+        FeederUnit1 := TRUE;
+        FeederUnit2 := TRUE;
+        TimerFeeder(IN := TRUE, PT := T#3S); // Delay for feeder stabilization.
+        IF TimerFeeder.Q THEN
+			TimerFeeder(IN := FALSE);
+            WindingTension := TensionSetpoint; // Apply setpoint tension.
+            StartupIndex := 20; // Move to next step.
+        END_IF
+
+    // Step 20: Start Cooling Stations Sequentially
+    20:
+		TimerCooling(IN := IdxCool < 7, PT := T#1S); // Wait 1 seconds between stations.
+		IF TimerCooling.Q THEN
+			TimerCooling(IN := FALSE);
+			IdxCool := IdxCool + 1;
+			CoolStation[IdxCool] := TRUE;
+		END_IF
+		
+		// Move to next step once all stations are active.
+		StartupIndex := SEL(IdxCool > 6, 20, 30);
+
+    // Step 30: Synchronize and Start Cutters
+    30:
+        TimerCutting(IN := TRUE, PT := T#0.5S); // 0.5-second delay for synchronization.
+        IF TimerCutting.Q THEN
+			TimerCutting(IN := FALSE);
+            HorizontalCutter := TRUE; // Activate horizontal cutter.
+            VerticalCutter := TRUE;   // Activate vertical cutter.
+            StartupIndex := 40; // Move to running state.
+        END_IF
+
+    // Step 40: Machine in Running State
+    40:
+        // All components running and synchronized
+        IF WindingTension < TensionSetpoint THEN
+            FeederUnit1 := FALSE; // Adjust feeder units if tension is low.
+            FeederUnit2 := FALSE;
+        ELSE
+            FeederUnit1 := TRUE;
+            FeederUnit2 := TRUE;
+        END_IF
+    
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

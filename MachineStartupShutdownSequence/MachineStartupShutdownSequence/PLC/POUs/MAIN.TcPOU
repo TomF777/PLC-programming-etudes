@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{447aaf97-da07-44cd-87ec-09e538061c6d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	MachineStartupShutdownSequence	:	MachineStartupShutdownSequence;
+	SeqStart, SeqStop				:	BOOL;
+	tp01, tp02						:	TP;
+	tp03, tp04						:	TP;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+tp01(IN:= NOT tp02.Q, PT:=T#200MS , Q=> , ET=> );
+tp02(IN:= NOT tp01.Q , PT:=T#400MS , Q=> , ET=> );
+
+tp03(IN:= NOT tp04.Q, PT:=T#800MS , Q=> , ET=> );
+tp04(IN:= NOT tp03.Q , PT:=T#200MS , Q=> , ET=> );
+
+
+MachineStartupShutdownSequence(Startup := SeqStart, 
+								Shutdown := SeqStop);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
