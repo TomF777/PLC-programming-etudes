@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN_ST" Id="{559ceac3-2c08-491e-bc14-428321ff1240}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN_ST
+VAR
+	ProductionAnalytics		:	ProductionAnalytics;
+	UnsortArray		: ARRAY[1..10] OF REAL := [5, 3, 8, 5, 6, 5, 5, 23, 5, 9];
+	SortedArray		: ARRAY[1..10] OF REAL;
+	
+	Sort			: BOOL;
+	GetMean			: BOOL;
+	GetStdDev		: BOOL;
+	GetTotal		: BOOL;
+	GetMax			: BOOL;
+	GetMin			: BOOL;
+	FindItem		: BOOL;
+	Mean			: REAL;
+	StdDev			: REAL;
+	Total			: REAL;
+	MaxItem			: REAL;
+	MinItem			: REAL;
+	FoundItemIdx	: UINT;
+	ItemFound		: BOOL;
+	ValidInput		: BOOL;
+	IsSorted		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ProductionAnalytics(DataArray:=UnsortArray);
+IF GetMean THEN
+	Mean := ProductionAnalytics.GetMean();
+ELSIF GetStdDev THEN
+	StdDev := ProductionAnalytics.GetStdDev();
+ELSIF GetTotal THEN
+	Total := ProductionAnalytics.GetTotal();
+ELSIF FindItem THEN
+	ProductionAnalytics.FindItem( SearchValue := 23, StartIndex := 1, Endindex := 10,
+								  FoundIndex => FoundItemIdx , 
+								  Found => ItemFound, 
+								  ValidInput => ValidInput);
+ELSIF Sort THEN
+	ProductionAnalytics.Sort(SortedArray => SortedArray, 
+							 IsSorted => IsSorted, 
+							 ValidInput => ValidInput);
+ELSIF GetMax THEN
+	MaxItem := ProductionAnalytics.GetMaxItem();
+
+ELSIF GetMin THEN
+	MinItem := ProductionAnalytics.GetMinItem();
+END_IF
+
+
+
+
+
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
