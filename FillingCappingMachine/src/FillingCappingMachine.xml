@@ -1,0 +1,2474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="" productName="CODESYS" productVersion="CODESYS V3.5 SP21 Patch 1" creationDateTime="2025-11-05T20:42:11.2679424" />
+  <contentHeader name="FillingCappingMachine.project" modificationDateTime="2025-11-05T20:07:38.1742246">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous />
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="CODESYS_Control_Win_V3_x64">
+        <resource name="Application">
+          <globalVars name="GVL_Actuators">
+            <variable name="ProductsInfeedEnable">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveConveyor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="FillingActuator">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveCappingStationDown">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="CappingActuator">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveRobotUp">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveRobotDown">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveRobotRight">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="MoveRobotLeft">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="RobotGripperActuator">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>e0b58f86-4533-40fb-bc84-948b21a77128</ObjectId>
+              </data>
+            </addData>
+          </globalVars>
+          <globalVars name="GVL_Buttons">
+            <variable name="StartButton">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="StopButton">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="EmergencyButton">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="ResetButton">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="HoldButton">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>53998b1e-cab4-4923-ba29-1673dc00de4a</ObjectId>
+              </data>
+            </addData>
+          </globalVars>
+          <globalVars name="GVL_Sensors">
+            <variable name="ProductOnConveyorStartSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="ProductOnFillingStationSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="ProductOnCappingStationSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="ProductOnPickupPositionSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="ConveyorMovingSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="FlowSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="CappingStationDownSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="RobotDownSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="RobotUpSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="RobotLeftSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="RobotRightSensor">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>4b9ea2f2-ea0f-4499-9a98-56a61b3c0384</ObjectId>
+              </data>
+            </addData>
+          </globalVars>
+          <globalVars name="GVL_SignalManagement">
+            <variable name="GlobalSignalList">
+              <type>
+                <derived name="StSignalList" />
+              </type>
+            </variable>
+            <variable name="SignalManagement">
+              <type>
+                <derived name="FB_SignalManagement" />
+              </type>
+            </variable>
+            <variable name="MaximumNumberOfSimultaneousSignals">
+              <type>
+                <UINT />
+              </type>
+              <initialValue>
+                <simpleValue value="100" />
+              </initialValue>
+            </variable>
+            <variable name="MaximumNumberOfConfigurableSignals">
+              <type>
+                <UINT />
+              </type>
+              <initialValue>
+                <simpleValue value="1000" />
+              </initialValue>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>636edfc4-4aa6-4600-8c36-bc38f299def7</ObjectId>
+              </data>
+              <data name="http://www.3s-software.com/plcopenxml/mixedattrsvarlist" handleUnknown="implementation">
+                <MixedAttrsVarList>
+                  <globalVars name="GVL_SignalManagement">
+                    <variable name="GlobalSignalList">
+                      <type>
+                        <derived name="StSignalList" />
+                      </type>
+                    </variable>
+                    <variable name="SignalManagement">
+                      <type>
+                        <derived name="FB_SignalManagement" />
+                      </type>
+                    </variable>
+                  </globalVars>
+                  <globalVars name="GVL_SignalManagement" constant="true">
+                    <variable name="MaximumNumberOfSimultaneousSignals">
+                      <type>
+                        <UINT />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="100" />
+                      </initialValue>
+                    </variable>
+                    <variable name="MaximumNumberOfConfigurableSignals">
+                      <type>
+                        <UINT />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="1000" />
+                      </initialValue>
+                    </variable>
+                  </globalVars>
+                </MixedAttrsVarList>
+              </data>
+            </addData>
+          </globalVars>
+          <globalVars name="GVL_GenericDevices">
+            <variable name="ConveyorDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="FillingDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="CappingMovementDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="CappingDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="RobotHorizontalDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="RobotVerticalDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <variable name="RobotGripperDevice">
+              <type>
+                <derived name="FB_GenericDevice" />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>2b7438f2-0768-42f8-b4b3-91b9dd8ba5ac</ObjectId>
+              </data>
+            </addData>
+          </globalVars>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumFeedbackType">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="NoFeedback" value="0" />
+                      <value name="SingleEnableFeedback" value="10" />
+                      <value name="SingleDisableFeedback" value="20" />
+                      <value name="DoubleFeedback" value="30" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>b8fb22ae-0c9b-4b9e-a48b-ca7545c20c20</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumActuationType">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="NoActuation" value="0" />
+                      <value name="SingleActuation" value="10" />
+                      <value name="DoubleActuation" value="20" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>93c44928-cfa6-4fca-b20f-30fa170e27e8</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumDeviceState">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="Off" value="0" />
+                      <value name="Disabled" value="10" />
+                      <value name="Enabling" value="20" />
+                      <value name="Enabled" value="30" />
+                      <value name="Disabling" value="40" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>7e369da4-efb5-4a91-8570-fb87d656d0a0</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumDeviceFault">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="NoFault" value="0" />
+                      <value name="EnableFeedbackFault" value="10" />
+                      <value name="DisableFeedbackFault" value="20" />
+                      <value name="ActuatorFault" value="30" />
+                      <value name="GenericFault" value="40" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>6e827e40-8d73-4157-8cc0-3f3fa5e1c682</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumSignalType">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="None" value="0" />
+                      <value name="Message" value="10" />
+                      <value name="Warning" value="20" />
+                      <value name="Alarm" value="30" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>5551a732-3ff1-4fad-bfaf-be2b3a9d88b2</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="StSignal">
+                <baseType>
+                  <struct>
+                    <variable name="SignalName">
+                      <type>
+                        <string />
+                      </type>
+                    </variable>
+                    <variable name="SignalId">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="SignalType">
+                      <type>
+                        <derived name="EnumSignalType" />
+                      </type>
+                    </variable>
+                    <variable name="Active">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </struct>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>f422b3d4-080b-43c2-b134-75d725cdca1e</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="StSignalList">
+                <baseType>
+                  <struct>
+                    <variable name="AlarmsActive">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="WarningsActive">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="MessagesActive">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="NumberOfActiveSignals">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="NumberOfActiveAlarms">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="NumberOfActiveWarnings">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="NumberOfActiveMessages">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="ActiveSignals">
+                      <type>
+                        <array>
+                          <dimension lower="1" upper="MaximumNumberOfSimultaneousSignals" />
+                          <baseType>
+                            <derived name="StSignal" />
+                          </baseType>
+                        </array>
+                      </type>
+                    </variable>
+                  </struct>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>34bc3ce2-86e2-4db6-abb2-d43b466caf95</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/datatype" handleUnknown="implementation">
+              <dataType name="EnumStationState">
+                <baseType>
+                  <enum>
+                    <values>
+                      <value name="NotRunning" value="0" />
+                      <value name="Running" value="10" />
+                      <value name="Stopping" value="20" />
+                      <value name="Holding" value="30" />
+                      <value name="Fault" value="40" />
+                    </values>
+                  </enum>
+                </baseType>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+                    <Attributes>
+                      <Attribute Name="qualified_only" Value="" />
+                      <Attribute Name="strict" Value="" />
+                    </Attributes>
+                  </data>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>f59ddbb9-ee79-4a99-93f4-f20e06b146e9</ObjectId>
+                  </data>
+                </addData>
+              </dataType>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="Main" pouType="program">
+                <interface>
+                  <localVars>
+                    <variable name="State">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                  </localVars>
+                </interface>
+                <actions>
+                  <action name="A_GenericDevicesCall">
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">ConveyorDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= ConveyorMovingSensor, 
+	DeviceDisabledSensor:= , 
+	FeedbackType:= SingleEnableFeedback, 
+	ActuationType:= SingleActuation, 
+	DeviceActivationTime:= T#100MS, 
+	DeviceDeactivationTime:= T#100MS ,
+ 
+	EnableDeviceActuator=&gt; MoveConveyor, 
+	DisableDeviceActuator=&gt; , 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+FillingDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= FlowSensor, 
+	DeviceDisabledSensor:= , 
+	FeedbackType:= SingleEnableFeedback, 
+	ActuationType:= SingleActuation, 
+	DeviceActivationTime:= T#100MS, 
+	DeviceDeactivationTime:= T#100MS, 
+	
+	EnableDeviceActuator=&gt; FillingActuator, 
+	DisableDeviceActuator=&gt; , 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+CappingMovementDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= CappingStationDownSensor, 
+	DeviceDisabledSensor:= , 
+	FeedbackType:= SingleEnableFeedback, 
+	ActuationType:= SingleActuation, 
+	DeviceActivationTime:= T#1S, 
+	DeviceDeactivationTime:= T#1S, 
+	
+	EnableDeviceActuator=&gt; MoveCappingStationDown, 
+	DisableDeviceActuator=&gt; , 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+
+CappingDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= , 
+	DeviceDisabledSensor:= , 
+	FeedbackType:= NoFeedback, 
+	ActuationType:= SingleActuation, 
+	DeviceActivationTime:= T#0.1S, 
+	DeviceDeactivationTime:= T#0.1S,
+ 
+	EnableDeviceActuator=&gt; CappingActuator, 
+	DisableDeviceActuator=&gt; , 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+	
+RobotVerticalDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= RobotUpSensor, 
+	DeviceDisabledSensor:= RobotDownSensor, 
+	FeedbackType:= DoubleFeedback, 
+	ActuationType:= DoubleActuation, 
+	DeviceActivationTime:= T#5S, 
+	DeviceDeactivationTime:= T#5S, 
+	
+	EnableDeviceActuator=&gt; MoveRobotUp, 
+	DisableDeviceActuator=&gt; MoveRobotDown, 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+	
+RobotHorizontalDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= RobotRightSensor, 
+	DeviceDisabledSensor:= RobotLeftSensor, 
+	FeedbackType:= DoubleFeedback, 
+	ActuationType:= DoubleActuation, 
+	DeviceActivationTime:= T#5S, 
+	DeviceDeactivationTime:= T#5S, 
+	
+	EnableDeviceActuator=&gt; MoveRobotRight, 
+	DisableDeviceActuator=&gt; MoveRobotLeft, 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );
+	
+
+RobotGripperDevice(
+	EnableGenericDevice:= , 
+	DeviceCmd:= , 
+	DeviceEnabledSensor:= , 
+	DeviceDisabledSensor:= , 
+	FeedbackType:= NoFeedback, 
+	ActuationType:= SingleActuation, 
+	DeviceActivationTime:= T#0.5S, 
+	DeviceDeactivationTime:= T#0.5S, 
+	
+	EnableDeviceActuator=&gt; RobotGripperActuator, 
+	DisableDeviceActuator=&gt; , 
+	DeviceState=&gt; , 
+	DeviceFault=&gt; );</xhtml>
+                      </ST>
+                    </body>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                        <ObjectId>a52224c8-2c91-430d-9687-0f7f7bea87c1</ObjectId>
+                      </data>
+                    </addData>
+                  </action>
+                  <action name="A_StationsCall">
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">ConveyorStation(
+	Start:= , 
+	Stop:= , 
+	Hold:= , 
+	Emergency:= GlobalSignalList.AlarmsActive, 
+	StationState=&gt; );
+	
+RobotStation(
+	Start:= , 
+	Stop:= , 
+	Hold:= , 
+	Emergency:= GlobalSignalList.AlarmsActive , 
+	StationState=&gt; );
+	
+	</xhtml>
+                      </ST>
+                    </body>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                        <ObjectId>2aeacad9-b408-461e-8c31-fc04fe8a2f08</ObjectId>
+                      </data>
+                    </addData>
+                  </action>
+                  <action name="A_MainFaults">
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">SignalManagement(
+	SignalActive:= EmergencyButton, 
+	SignalName:= 'E-Stop button Pressed', 
+	SignalId:= 1, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= ConveyorDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Conveyor Device - Enable Feedback Fault', 
+	SignalId:= 2, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= ConveyorDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Conveyor Device - Disable Feedback Fault', 
+	SignalId:= 3, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= ConveyorDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Conveyor Device - Actuator Fault',
+	SignalId:= 4, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+
+SignalManagement(
+	SignalActive:= ConveyorDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Conveyor Device - Generic Fault',
+	SignalId:= 5, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= FillingDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Filling Device - Enable Feedback Fault',
+	SignalId:= 6, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= FillingDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Filling Device - Disable Feedback Fault',
+	SignalId:= 7, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= FillingDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Filling Device - Actuator Fault',
+	SignalId:= 8, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= FillingDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Filling Device - Actuator Fault',
+	SignalId:= 9, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Capping Device - Enable Feedback Fault',
+	SignalId:= 10, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Capping Device - Disable Feedback Fault',
+	SignalId:= 11, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Capping Device - Actuator Fault',
+	SignalId:= 12, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Capping Device - Generic Fault',
+	SignalId:= 13, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingMovementDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Capping Movement Device - Enable Feedback Fault',
+	SignalId:= 14, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingMovementDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Capping Movement Device - Disable Feedback Fault',
+	SignalId:= 15, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= CappingMovementDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Capping Movement Device - Actuator Fault',
+	SignalId:= 16, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= CappingMovementDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Capping Movement Device - Generic Fault',
+	SignalId:= 17, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= RobotHorizontalDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Robot Horizontal Device - Enable Feedback Fault',
+	SignalId:= 18, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= RobotHorizontalDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Robot Horizontal Device - Disable Feedback Fault',
+	SignalId:= 19, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotHorizontalDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Robot Horizontal Device - Actuator Fault',
+	SignalId:= 20, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotHorizontalDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Robot Horizontal Device - Generic Fault',
+	SignalId:= 21, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotVerticalDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Robot Vertical Device - Enable Feedback Fault',
+	SignalId:= 22, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotVerticalDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Robot Vertical Device - Disable Feedback Fault',
+	SignalId:= 23, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotVerticalDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Robot Vertical Device - Actuator Fault',
+	SignalId:= 24, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+
+SignalManagement(
+	SignalActive:= RobotVerticalDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Robot Vertical Device - Generic Fault',
+	SignalId:= 25, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotGripperDevice.DeviceFault = EnableFeedbackFault, 
+	SignalName:= 'Robot Gripper Device - Enable Feedback Fault',
+	SignalId:= 26, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotGripperDevice.DeviceFault = DisableFeedbackFault, 
+	SignalName:= 'Robot Gripper Device - Disable Feedback Fault',
+	SignalId:= 27, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotGripperDevice.DeviceFault = ActuatorFault, 
+	SignalName:= 'Robot Gripper Device - Actuator Fault',
+	SignalId:= 28, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= RobotGripperDevice.DeviceFault = GenericFault, 
+	SignalName:= 'Robot Gripper Device - Generic Fault',
+	SignalId:= 29, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+</xhtml>
+                      </ST>
+                    </body>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                        <ObjectId>814bcf01-811b-4b42-bd2b-b9deb771cc79</ObjectId>
+                      </data>
+                    </addData>
+                  </action>
+                </actions>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">A_StationsCall();
+A_GenericDevicesCall();
+A_MainFaults();
+
+CASE State OF
+	// machine not running
+	0:
+		ConveyorStation.Start := FALSE;
+		ConveyorStation.Stop := FALSE;
+		ConveyorStation.Hold := FALSE;
+		
+		RobotStation.Start := FALSE;
+		RobotStation.Stop := FALSE;
+		RobotStation.Hold := FALSE;
+		
+		IF StartButton AND NOT StopButton AND NOT HoldButton THEN
+			ConveyorStation.Start := TRUE;
+			RobotStation.Start := TRUE;
+			State := 10;
+		END_IF
+	
+	// wait for all station to be running	
+	10:
+		IF ConveyorStation.StationState = EnumStationState.Running AND RobotStation.StationState = EnumStationState.Running THEN
+			ConveyorStation.Start := FALSE;
+			RobotStation.Start := FALSE;
+			State := 20;
+		END_IF
+	
+	// running	
+	20:
+		;
+	// hold state
+	500:
+		IF ConveyorStation.StationState = EnumStationState.Holding AND RobotStation.StationState = EnumStationState.Holding AND NOT HoldButton THEN
+			ConveyorStation.Hold := FALSE;
+			RobotStation.Hold := FALSE;
+			State := 10;
+		END_IF
+	
+	// stop state
+	1000:
+		IF ConveyorStation.StationState = EnumStationState.NotRunning AND RobotStation.StationState = EnumStationState.NotRunning THEN
+			State := 0;
+		END_IF
+	
+END_CASE
+
+
+// emergency management
+IF GlobalSignalList.AlarmsActive THEN
+	State := 0;
+END_IF
+
+
+// stop management
+IF StopButton AND State &lt;&gt; 0 AND State &lt;&gt; 1000 THEN
+	ConveyorStation.Stop := TRUE;
+	RobotStation.Stop := TRUE;
+	State := 1000;
+END_IF
+
+// hold management
+IF HoldButton AND State &lt;&gt; 0 AND State &lt;&gt; 1000 AND State &lt;&gt; 500 THEN
+	ConveyorStation.Hold := TRUE;
+	RobotStation.Hold := TRUE;
+	State := 500;
+END_IF</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>8e9de372-7011-4e91-88f4-1851ceab56ef</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="FB_GenericDevice" pouType="functionBlock">
+                <interface>
+                  <inputVars>
+                    <variable name="EnableGenericDevice">
+                      <type>
+                        <BOOL />
+                      </type>
+                      <documentation>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml"> Enable the FB</xhtml>
+                      </documentation>
+                    </variable>
+                    <variable name="DeviceCmd">
+                      <type>
+                        <BOOL />
+                      </type>
+                      <documentation>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml"> TRUE --&gt; Enable Request, FALSE --&gt; Disable Request</xhtml>
+                      </documentation>
+                    </variable>
+                    <variable name="DeviceEnabledSensor">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="DeviceDisabledSensor">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="FeedbackType">
+                      <type>
+                        <derived name="EnumFeedbackType" />
+                      </type>
+                    </variable>
+                    <variable name="ActuationType">
+                      <type>
+                        <derived name="EnumActuationType" />
+                      </type>
+                    </variable>
+                    <variable name="DeviceActivationTime">
+                      <type>
+                        <TIME />
+                      </type>
+                    </variable>
+                    <variable name="DeviceDeactivationTime">
+                      <type>
+                        <TIME />
+                      </type>
+                    </variable>
+                  </inputVars>
+                  <outputVars>
+                    <variable name="EnableDeviceActuator">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="DisableDeviceActuator">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="DeviceState">
+                      <type>
+                        <derived name="EnumDeviceState" />
+                      </type>
+                    </variable>
+                    <variable name="DeviceFault">
+                      <type>
+                        <derived name="EnumDeviceFault" />
+                      </type>
+                    </variable>
+                  </outputVars>
+                  <localVars>
+                    <variable name="InternalDisableFeedback">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="InternalEnableFeedback">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="InternalTimer">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="Timeout">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </localVars>
+                </interface>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">///*** Feedback Mapping ***///
+
+CASE (FeedbackType) OF
+	
+	NoFeedback:
+		InternalDisableFeedback := (DeviceState = Disabled) OR (DeviceState = Disabling AND Timeout);
+		InternalEnableFeedback := (DeviceState = Enabled) OR (DeviceState = Enabling AND Timeout);
+	
+	SingleEnableFeedback:
+		InternalDisableFeedback := (DeviceState = Disabled) OR (DeviceState = Disabling AND Timeout);
+		InternalEnableFeedback := DeviceEnabledSensor;
+	
+	SingleDisableFeedback:
+		InternalDisableFeedback := DeviceDisabledSensor;
+		InternalEnableFeedback := (DeviceState = Enabled) OR (DeviceState = Enabling AND Timeout);
+	
+	DoubleFeedback:
+		InternalDisableFeedback := DeviceDisabledSensor;
+		InternalEnableFeedback := DeviceEnabledSensor;
+		
+
+END_CASE
+
+
+
+///*** Generic Device State Machine ***///
+
+CASE (DeviceState) OF
+
+	Off:
+	
+		// Reset the timer
+		InternalTimer.IN := FALSE;
+		InternalTimer.PT := T#0S;
+		
+		IF EnableGenericDevice THEN
+			IF DeviceCmd THEN
+				DeviceState := Enabling;
+			ELSE
+				DeviceState := Disabling;
+			END_IF
+		END_IF
+
+
+	Disabled:
+		
+		// Reset the timer
+		InternalTimer.IN := FALSE;
+		InternalTimer.PT := T#0S;
+		
+		// EnableRequest --&gt; State = Enabling
+		IF DeviceCmd THEN
+			DeviceState := Enabling;
+		END_IF
+		
+		
+	Enabling:
+		// Start the Timer with the ActivationTime
+		InternalTimer.IN := TRUE;
+		InternalTimer.PT := DeviceActivationTime;
+	
+		IF InternalEnableFeedback THEN
+			DeviceState := Enabled;
+		END_IF
+
+		IF NOT DeviceCmd THEN
+			// Reset the timer
+			InternalTimer.IN := FALSE;
+			InternalTimer.PT := T#0S;
+			
+			DeviceState := Disabling;
+		END_IF
+
+		
+	Enabled: 
+		// Reset the timer
+		InternalTimer.IN := FALSE;
+		InternalTimer.PT := T#0S;
+		
+		// DisableRequest --&gt; State = Disabling
+		IF NOT DeviceCmd THEN
+			DeviceState := Disabling;
+		END_IF
+		
+		
+	Disabling:
+		// Start the Timer with the DeactivationTime
+		InternalTimer.IN := TRUE;
+		InternalTimer.PT := DeviceDeactivationTime;
+	
+		IF InternalDisableFeedback THEN
+			DeviceState := Disabled;
+		END_IF
+		
+		IF DeviceCmd THEN
+			// Reset the timer
+			InternalTimer.IN := FALSE;
+			InternalTimer.PT := T#0S;
+			
+			DeviceState := Enabling;
+		END_IF
+		
+END_CASE
+
+IF NOT EnableGenericDevice THEN
+	DeviceState := Off;
+END_IF
+
+///*** Timer Call ***///
+InternalTimer(IN:= , PT:= , Q=&gt; Timeout, ET=&gt; );
+
+
+///*** Actuators Mapping ***///
+
+CASE (ActuationType) OF
+
+	SingleActuation:
+		EnableDeviceActuator	:= (DeviceState = Enabling) OR (DeviceState = Enabled);
+				
+	DoubleActuation:
+		EnableDeviceActuator 	:= (DeviceState = Enabling);
+		DisableDeviceActuator	:= (DeviceState = Disabling);
+
+END_CASE
+
+
+///*** Fault Detection ***///
+
+
+CASE (FeedBackType) OF
+	
+	NoFeedback:
+		DeviceFault	:=	NoFault;
+	
+	
+	SingleDisableFeedback:
+		IF 	(DeviceState = Disabled AND NOT DeviceDisabledSensor) OR
+			(DeviceState = Enabling AND DeviceDisabledSensor AND Timeout) OR
+			(DeviceState = Enabled AND DeviceDisabledSensor) OR
+			(DeviceState = Disabling AND NOT DeviceDisabledSensor AND Timeout) THEN
+			
+			DeviceFault := GenericFault;
+			
+		ELSE
+			DeviceFault := NoFault;
+			
+		END_IF
+	
+	
+	SingleEnableFeedback:
+		IF 	(DeviceState = Disabled AND DeviceEnabledSensor) OR
+			(DeviceState = Enabling AND NOT DeviceEnabledSensor AND Timeout) OR
+			(DeviceState = Enabled AND NOT DeviceEnabledSensor) OR
+			(DeviceState = Disabling AND DeviceEnabledSensor AND Timeout) THEN
+			
+			DeviceFault := GenericFault;
+			
+		ELSE
+			DeviceFault := NoFault;
+		END_IF
+	
+	
+	
+	DoubleFeedback:
+		IF 		(DeviceState = Disabled AND NOT DeviceDisabledSensor AND NOT DeviceEnabledSensor) OR
+				(DeviceState = Enabled AND DeviceDisabledSensor AND DeviceEnabledSensor) OR
+				(DeviceState = Disabling AND NOT DeviceDisabledSensor AND NOT DeviceEnabledSensor AND Timeout) THEN
+			
+				DeviceFault := DisableFeedbackFault;
+		
+		ELSIF 	(DeviceState = Disabled AND DeviceDisabledSensor AND DeviceEnabledSensor) OR
+				(DeviceState = Enabling AND NOT DeviceDisabledSensor AND NOT DeviceEnabledSensor AND Timeout) OR
+				(DeviceState = Enabled AND NOT DeviceDisabledSensor AND NOT DeviceEnabledSensor) THEN
+				
+				DeviceFault := EnableFeedbackFault;
+		
+		ELSIF	(DeviceState = Disabled AND NOT DeviceDisabledSensor AND DeviceEnabledSensor) OR
+				(DeviceState = Enabling AND DeviceDisabledSensor AND NOT DeviceEnabledSensor AND Timeout) OR
+				(DeviceState = Enabled AND DeviceDisabledSensor AND NOT DeviceEnabledSensor) OR
+				(DeviceState = Disabling AND NOT DeviceDisabledSensor AND DeviceEnabledSensor AND Timeout) THEN
+				
+				DeviceFault := ActuatorFault;
+				
+		ELSE
+			
+				DeviceFault := NoFault;
+		END_IF
+
+
+
+END_CASE
+
+
+
+
+
+
+
+
+</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>844d6350-2418-4429-8e1a-6591b8a97af9</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="FB_SignalManagement" pouType="functionBlock">
+                <interface>
+                  <inputVars>
+                    <variable name="SignalActive">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="SignalName">
+                      <type>
+                        <string />
+                      </type>
+                    </variable>
+                    <variable name="SignalId">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="SignalType">
+                      <type>
+                        <derived name="EnumSignalType" />
+                      </type>
+                    </variable>
+                    <variable name="AutoReset">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Reset">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </inputVars>
+                  <inOutVars>
+                    <variable name="SignalList">
+                      <type>
+                        <derived name="StSignalList" />
+                      </type>
+                    </variable>
+                  </inOutVars>
+                  <localVars>
+                    <variable name="ActiveSignals">
+                      <type>
+                        <array>
+                          <dimension lower="1" upper="MaximumNumberOfConfigurableSignals" />
+                          <baseType>
+                            <BOOL />
+                          </baseType>
+                        </array>
+                      </type>
+                    </variable>
+                    <variable name="SignalIndexesInList">
+                      <type>
+                        <array>
+                          <dimension lower="1" upper="MaximumNumberOfConfigurableSignals" />
+                          <baseType>
+                            <UINT />
+                          </baseType>
+                        </array>
+                      </type>
+                    </variable>
+                    <variable name="NewSignalIndex">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="Index">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                  </localVars>
+                </interface>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">IF SignalId &lt; 1 OR SignalId &gt; MaximumNumberOfConfigurableSignals OR SignalType = None THEN
+	RETURN;
+END_IF
+
+
+// New Signal
+IF SignalActive AND NOT ActiveSignals[SignalId] AND SignalList.NumberOfActiveSignals &lt; MaximumNumberOfSimultaneousSignals THEN
+	
+	// Activate Signal
+	ActiveSignals[SignalId] := TRUE;
+	
+	// Update Number of Active Signals
+	SignalList.NumberOfActiveSignals := SignalList.NumberOfActiveSignals + 1;
+	
+	CASE (SignalType) OF
+	
+		Alarm:
+			SignalList.NumberOfActiveAlarms := SignalList.NumberOfActiveAlarms + 1;
+			NewSignalIndex := SignalList.NumberOfActiveAlarms;
+			
+		Warning:
+			SignalList.NumberOfActiveWarnings := SignalList.NumberOfActiveWarnings + 1;
+			NewSignalIndex := SignalList.NumberOfActiveAlarms + SignalList.NumberOfActiveWarnings;
+			
+		Message:
+			SignalList.NumberOfActiveMessages := SignalList.NumberOfActiveMessages + 1;
+			NewSignalIndex := SignalList.NumberOfActiveSignals;
+	
+	END_CASE
+	
+	// Reorder List After new Signal
+	FOR Index := SignalList.NumberOfActiveSignals TO NewSignalIndex + 1 BY -1 DO
+		SignalList.ActiveSignals[Index] := SignalList.ActiveSignals[Index  - 1];
+		SignalIndexesInList[SignalList.ActiveSignals[Index].SignalId] := Index;
+	END_FOR
+	
+	// Add Signal To List in the Correct Index
+	SignalList.ActiveSignals[NewSignalIndex].SignalName := SignalName;
+	SignalList.ActiveSignals[NewSignalIndex].SignalId 	:= SignalId;
+	SignalList.ActiveSignals[NewSignalIndex].SignalType := SignalType;
+	SignalList.ActiveSignals[NewSignalIndex].Active 	:= TRUE;
+	
+	SignalIndexesinList[SignalId] := NewSignalIndex;
+END_IF
+
+
+
+
+
+
+// Reset Signal
+IF NOT SignalActive AND ActiveSignals[SignalId] AND (Reset OR AutoReset) THEN
+
+	// Reorder the List
+	FOR Index := SignalIndexesinList[SignalId] TO SignalList.NumberOfActiveSignals - 1 DO
+		SignalList.ActiveSignals[Index] := SignalList.ActiveSignals[Index + 1];
+		SignalIndexesInList[SignalList.ActiveSignals[Index].SignalId] := Index;
+	END_FOR
+
+	// Update Number of Active Signals
+	SignalList.NumberOfActiveSignals := SignalList.NumberOfActiveSignals - 1;
+	
+	CASE (SignalType) OF
+	
+		Alarm:
+			SignalList.NumberOfActiveAlarms := SignalList.NumberOfActiveAlarms - 1;
+			
+		Warning:
+			SignalList.NumberOfActiveWarnings := SignalList.NumberOfActiveWarnings - 1;
+			
+		Message:
+			SignalList.NumberOfActiveMessages := SignalList.NumberOfActiveMessages - 1;
+	
+	END_CASE
+	
+	
+	// Reset Last Signal in the List
+	SignalList.ActiveSignals[SignalList.NumberOfActiveSignals + 1].SignalName := '';
+	SignalList.ActiveSignals[SignalList.NumberOfActiveSignals + 1].SignalId := 0;
+	SignalList.ActiveSignals[SignalList.NumberOfActiveSignals + 1].SignalType := None;
+	SignalList.ActiveSignals[SignalList.NumberOfActiveSignals + 1].Active := FALSE;
+
+
+	// Dectivate Signal
+	ActiveSignals[SignalId] := FALSE;
+	SignalIndexesinList[SignalId] := 0;
+END_IF 
+
+
+
+
+SignalList.AlarmsActive := SignalList.NumberOfActiveAlarms &gt; 0;
+SignalList.WarningsActive := SignalList.NumberOfActiveWarnings &gt; 0;
+SignalList.MessagesActive := SignalList.NumberOfActiveMessages &gt; 0;
+
+
+
+
+
+
+</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>2b3bbfb2-bc49-4cc4-a22b-773daf28f655</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="FB_SignalMonitor" pouType="functionBlock">
+                <interface>
+                  <inputVars>
+                    <variable name="Enable">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="SignalToMonitor">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Reset">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </inputVars>
+                  <outputVars>
+                    <variable name="Fault">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </outputVars>
+                  <localVars>
+                    <variable name="SignalOk">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="State">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                  </localVars>
+                </interface>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">
+
+CASE (State) OF
+	
+	// Disabled
+	0:
+		IF Enable THEN
+			State := 10;
+			SignalOk := FALSE;
+		END_IF
+
+	// Monitoring
+	10:
+		IF SignalToMonitor THEN
+			SignalOk := TRUE;
+		END_IF
+	
+	
+		IF NOT Enable THEN
+			IF NOT SignalOk THEN
+				Fault := TRUE;
+			END_IF
+			State := 0;
+		END_IF
+END_CASE
+
+
+IF Reset THEN
+	Fault := FALSE;
+END_IF</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>a8e3f602-a490-4de4-8c54-09853747e0e1</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="ConveyorStation" pouType="program">
+                <interface>
+                  <inputVars>
+                    <variable name="Start">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Stop">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Hold">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Emergency">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </inputVars>
+                  <localVars>
+                    <variable name="State">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="HoldState">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="HoldRequest">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="NumberOfProductsOnConveyor">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="rtrigProductOnStartConveyor">
+                      <type>
+                        <derived name="R_TRIG" />
+                      </type>
+                    </variable>
+                    <variable name="rtrigProductOnFillingStation">
+                      <type>
+                        <derived name="R_TRIG" />
+                      </type>
+                    </variable>
+                    <variable name="rtrigProductOnCappingStation">
+                      <type>
+                        <derived name="R_TRIG" />
+                      </type>
+                    </variable>
+                    <variable name="rtrigProductOnPickupPosition">
+                      <type>
+                        <derived name="R_TRIG" />
+                      </type>
+                    </variable>
+                    <variable name="ftrigProductOnPickupPosition">
+                      <type>
+                        <derived name="F_TRIG" />
+                      </type>
+                    </variable>
+                    <variable name="FillingState">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="CappingState">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="TimerFilling">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="FillingTime">
+                      <type>
+                        <TIME />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="TIME#1s0ms" />
+                      </initialValue>
+                    </variable>
+                    <variable name="TimerCapping">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="CappingTime">
+                      <type>
+                        <TIME />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="TIME#500ms" />
+                      </initialValue>
+                    </variable>
+                    <variable name="TimerFaultFillingStationSensorDisabled">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="TimerFaultCappingStationSensorDisabled">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="TimerFaultPickupPositionSensorDisabled">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="TimerFaultFillingStationSensorEnabled">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="TimerFaultCappingStationSensorEnabled">
+                      <type>
+                        <derived name="TON" />
+                      </type>
+                    </variable>
+                    <variable name="TimeSensorFaultDisabled">
+                      <type>
+                        <TIME />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="TIME#10s0ms" />
+                      </initialValue>
+                    </variable>
+                    <variable name="TimeSensorFaultEnabled">
+                      <type>
+                        <TIME />
+                      </type>
+                      <initialValue>
+                        <simpleValue value="TIME#1s0ms" />
+                      </initialValue>
+                    </variable>
+                  </localVars>
+                  <outputVars>
+                    <variable name="StationState">
+                      <type>
+                        <derived name="EnumStationState" />
+                      </type>
+                    </variable>
+                  </outputVars>
+                </interface>
+                <actions>
+                  <action name="FillingStationStateMachine">
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">CASE FillingState OF	
+			// start state
+			0:
+				FillingDevice.DeviceCmd := TRUE;
+				IF FillingDevice.DeviceState = Enabled THEN
+					FillingState := 10;
+					TimerFilling.IN := TRUE;
+					TimerFilling.PT := FillingTime;
+				END_IF
+				
+			// wait for filling	
+			10:
+				IF TimerFilling.Q THEN
+					TimerFilling.IN := FALSE;
+					FillingState := 20;
+				END_IF
+				
+			// stop filling
+			20:
+				FillingDevice.DeviceCmd := FALSE;
+				IF FillingDevice.DeviceState = Disabled THEN
+					FillingState := 100;
+				END_IF
+				
+			// finish state
+			100:
+				;
+END_CASE</xhtml>
+                      </ST>
+                    </body>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                        <ObjectId>b90afd1a-2261-493a-aeb8-91f122b5f2fc</ObjectId>
+                      </data>
+                    </addData>
+                  </action>
+                  <action name="CappingStationStateMachine">
+                    <body>
+                      <ST>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">CASE CappingState OF
+	// start state
+	0:
+		CappingDevice.DeviceCmd := TRUE;
+		CappingMovementDevice.DeviceCmd := TRUE;
+
+		IF CappingDevice.DeviceState = Enabled AND CappingMovementDevice.DeviceState = Enabled THEN
+			CappingState := 10;
+			TimerCapping.IN := TRUE;
+			TimerCapping.PT := CappingTime;
+		END_IF
+	
+	// wait capping time
+	10:
+		IF TimerCapping.Q THEN
+			TimerCapping.IN := FALSE;
+			CappingState := 20;
+		END_IF
+	
+	// stop capping and move up	
+	20:
+		CappingDevice.DeviceCmd := FALSE;
+		CappingMovementDevice.DeviceCmd := FALSE;
+		
+		IF CappingDevice.DeviceState = Disabled AND CappingMovementDevice.DeviceState = Disabled THEN
+			CappingState := 100;
+		END_IF
+	
+	// finish state
+	100:
+		;
+END_CASE</xhtml>
+                      </ST>
+                    </body>
+                    <addData>
+                      <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                        <ObjectId>60cf597a-529e-404f-8dad-4088d3ea903c</ObjectId>
+                      </data>
+                    </addData>
+                  </action>
+                </actions>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">rtrigProductOnStartConveyor(CLK:= ProductOnConveyorStartSensor );
+rtrigProductOnFillingStation(CLK:= ProductOnFillingStationSensor );
+rtrigProductOnCappingStation(CLK:= ProductOnCappingStationSensor );
+rtrigProductOnPickupPosition(CLK:= ProductOnPickupPositionSensor );
+ftrigProductOnPickupPosition(CLK:= ProductOnPickupPositionSensor );
+TimerFilling();
+TimerCapping();
+
+TimerFaultFillingStationSensorDisabled(IN:=, PT:=TimeSensorFaultDisabled, Q:=, ET=&gt;);
+TimerFaultCappingStationSensorDisabled(IN:=, PT:=TimeSensorFaultDisabled, Q:=, ET=&gt;);
+TimerFaultPickupPositionSensorDisabled(IN:=, PT:=TimeSensorFaultDisabled, Q:=, ET=&gt;);
+
+TimerFaultFillingStationSensorEnabled(IN:=, PT:=TimeSensorFaultEnabled, Q:=, ET=&gt;);
+TimerFaultCappingStationSensorEnabled(IN:=, PT:=TimeSensorFaultEnabled, Q:=, ET=&gt;);
+
+
+
+// product count management
+IF rtrigProductOnStartConveyor.Q THEN
+	TimerFaultFillingStationSensorDisabled.IN := TRUE; 
+	NumberOfProductsOnConveyor := NumberOfProductsOnConveyor +1; 
+END_IF
+
+IF rtrigProductOnFillingStation.Q THEN
+	// reset 1st timer and set next
+	// if all OK then the timer is reset before it elapses
+	TimerFaultFillingStationSensorDisabled.IN := FALSE;
+	TimerFaultCappingStationSensorDisabled.IN := TRUE;
+END_IF
+
+IF rtrigProductOnCappingStation.Q THEN
+	// reset previous timer and set next
+	// if all OK then the timer is reset before it elapses
+	TimerFaultCappingStationSensorDisabled.IN := FALSE;
+	TimerFaultPickupPositionSensorDisabled.IN := TRUE;
+END_IF
+
+IF rtrigProductOnPickupPosition.Q THEN
+	TimerFaultPickupPositionSensorDisabled.IN := FALSE;
+END_IF
+
+// reset timer then no sensor detected
+IF NOT ProductOnFillingStationSensor THEN
+	TimerFaultFillingStationSensorEnabled.IN := FALSE;
+END_IF
+
+IF NOT ProductOnCappingStationSensor THEN
+	TimerFaultCappingStationSensorEnabled.IN := FALSE;
+END_IF
+
+
+IF ftrigProductOnPickupPosition.Q THEN NumberOfProductsOnConveyor := NumberOfProductsOnConveyor -1; END_IF
+
+
+CASE State OF
+	
+	// disabled
+	0:
+		TimerFilling.IN := FALSE;
+		TimerCapping.IN := FALSE;
+		
+		TimerFaultFillingStationSensorDisabled.IN := FALSE;
+		TimerFaultCappingStationSensorDisabled.IN := FALSE;
+		TimerFaultPickupPositionSensorDisabled.IN := FALSE;
+		
+		TimerFaultFillingStationSensorEnabled.IN := FALSE;
+		TimerFaultCappingStationSensorEnabled.IN := FALSE;
+
+		ProductsInfeedEnable := FALSE;
+		IF Start AND NOT Stop AND NOT Emergency AND NOT Hold THEN
+			ConveyorDevice.EnableGenericDevice 			:= TRUE;
+			FillingDevice.EnableGenericDevice 			:= TRUE;
+			CappingMovementDevice.EnableGenericDevice 	:= TRUE;
+			CappingDevice.EnableGenericDevice			:= TRUE;
+			
+			ConveyorDevice.DeviceCmd := FALSE;
+			FillingDevice.DeviceCmd := FALSE;
+			CappingDevice.DeviceCmd := FALSE;
+			CappingMovementDevice.DeviceCmd := FALSE;
+			
+			State := 10;
+		END_IF
+		
+	// 	wait for products
+	10:
+		ProductsInfeedEnable := TRUE;
+		IF NumberOfProductsOnConveyor &gt; 0 THEN
+			State := 20;
+		END_IF
+		
+	// start moving conveyor
+	20: 
+		ConveyorDevice.DeviceCmd := TRUE;
+		IF ConveyorDevice.DeviceState = Enabled THEN
+			
+			IF ProductOnFillingStationSensor THEN
+				TimerFaultFillingStationSensorEnabled.IN := TRUE;
+			END_IF
+			
+			IF ProductOnCappingStationSensor THEN
+				TimerFaultCappingStationSensorEnabled.IN := TRUE;
+			END_IF
+		
+			State := 30;
+		END_IF
+		
+	// wait for products below stations
+	30:
+		IF rtrigProductOnFillingStation.Q OR rtrigProductOnCappingStation.Q THEN
+			IF 	rtrigProductOnFillingStation.Q THEN
+				// start FSM for filling in step 50
+				FillingState := 0;
+			ELSE 
+				FillingState := 100; 
+			END_IF
+			
+			IF rtrigProductOnCappingStation.Q THEN
+				// start FSM for capping in step 50
+				CappingState := 0;
+			ELSE
+				CappingState := 100;
+			END_IF
+		
+			ConveyorDevice.DeviceCmd := FALSE;
+			State := 40;
+		END_IF
+		
+	// wait for conveyor to stop
+	40:
+		IF ConveyorDevice.DeviceState = Disabled THEN
+			State := 50;
+		END_IF
+		
+	// processing state - multi nested FSM
+	50:
+		// ******* filling station state machine **********
+		FillingStationStateMachine();
+		
+		// ****** capping station state machine ***********
+		CappingStationStateMachine();
+		
+		IF FillingState = 100 AND CappingState = 100 THEN
+			State := 10;
+		END_IF
+		
+// ********************************************************
+
+	// hold state
+	500:
+	
+		TimerFaultFillingStationSensorDisabled.IN := FALSE;
+	    TimerFaultCappingStationSensorDisabled.IN := FALSE;
+		TimerFaultPickupPositionSensorDisabled.IN := FALSE;
+		TimerFaultFillingStationSensorEnabled.IN := FALSE;
+		TimerFaultCappingStationSensorEnabled.IN := FALSE;
+		
+		IF NOT Hold THEN
+			State := HoldState;
+			HoldState := 0;
+		END_IF
+		
+		
+	// stopping state	
+	1000:
+		ConveyorDevice.DeviceCmd := FALSE;
+		FillingDevice.DeviceCmd := FALSE;
+		CappingDevice.DeviceCmd := FALSE;
+		CappingMovementDevice.DeviceCmd := FALSE;
+		
+		IF ConveyorDevice.DeviceState = Disabled AND FillingDevice.DeviceState = Disabled AND
+			CappingDevice.DeviceState = Disabled AND CappingMovementDevice.DeviceState = Disabled THEN
+			
+			State := 0;
+		END_IF
+	
+END_CASE
+
+
+// emergency management
+IF State &lt;&gt; 0 AND Emergency THEN
+	State := 0;
+	ConveyorDevice.EnableGenericDevice 			:= FALSE;
+	FillingDevice.EnableGenericDevice 			:= False;
+	CappingMovementDevice.EnableGenericDevice 	:= False;
+	CappingDevice.EnableGenericDevice			:= False;
+END_IF
+
+// stop management
+IF State &lt;&gt; 0 AND State &lt;&gt; 1000 AND Stop THEN
+	State := 1000;
+END_IF
+
+// hold management
+IF State &lt;&gt; 0 AND State &lt;&gt; 500 AND State &lt;&gt; 1000 AND Hold THEN
+	HoldRequest := TRUE;
+END_IF
+
+IF State &lt;&gt; 500 AND State &lt;&gt; 20 AND State &lt;&gt; 30 AND State &lt;&gt; 50 AND HoldRequest THEN
+	HoldRequest := FALSE;
+	HoldState := State;
+	State := 500;
+END_IF
+
+// ******* Station State management *********
+IF (State = 0) THEN 	StationState := EnumStationState.NotRunning;
+ELSIF State = 500 THEN 	StationState := EnumStationState.Holding;
+ELSIF State = 1000 THEN StationState := EnumStationState.Stopping;
+ELSE 					StationState := EnumStationState.Running;	
+END_IF
+
+// ******* Station Fault management *********
+SignalManagement(
+	SignalActive:= TimerFaultFillingStationSensorDisabled.Q , 
+	SignalName:= 'Product On Filling Station Sensor Disabled Fault', 
+	SignalId:= 30, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= TimerFaultCappingStationSensorDisabled.Q , 
+	SignalName:= 'Product On Capping Station Sensor Disabled Fault', 
+	SignalId:= 31, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= TimerFaultPickupPositionSensorDisabled.Q , 
+	SignalName:= 'Product On Pickup Position Sensor Disabled Fault', 
+	SignalId:= 32, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+	
+SignalManagement(
+	SignalActive:= TimerFaultFillingStationSensorEnabled.Q , 
+	SignalName:= 'Product On Filling Station Sensor Enabled Fault', 
+	SignalId:= 33, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);
+	
+SignalManagement(
+	SignalActive:= TimerFaultCappingStationSensorEnabled.Q , 
+	SignalName:= 'Product On Capping Station Sensor Enabled Fault', 
+	SignalId:= 34, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>aaea375a-c2ea-4732-bd62-c5b851569557</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/pou" handleUnknown="implementation">
+              <pou name="RobotStation" pouType="program">
+                <interface>
+                  <inputVars>
+                    <variable name="Start">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Stop">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Hold">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="Emergency">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                  </inputVars>
+                  <localVars>
+                    <variable name="State">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="HoldState">
+                      <type>
+                        <UINT />
+                      </type>
+                    </variable>
+                    <variable name="HoldRequest">
+                      <type>
+                        <BOOL />
+                      </type>
+                    </variable>
+                    <variable name="PickupPositionSensorSignalMonitor">
+                      <type>
+                        <derived name="FB_SignalMonitor" />
+                      </type>
+                    </variable>
+                  </localVars>
+                  <outputVars>
+                    <variable name="StationState">
+                      <type>
+                        <derived name="EnumStationState" />
+                      </type>
+                    </variable>
+                  </outputVars>
+                </interface>
+                <body>
+                  <ST>
+                    <xhtml xmlns="http://www.w3.org/1999/xhtml">CASE State OF
+	
+	// disabled
+	0:
+		IF Start AND NOT Stop AND NOT Hold AND NOT Emergency THEN
+			RobotHorizontalDevice.EnableGenericDevice := TRUE;
+			RobotVerticalDevice.EnableGenericDevice := TRUE;
+			RobotGripperDevice.EnableGenericDevice := TRUE;
+			State := 10;
+		END_IF
+		
+	// move the robot to pickup position	
+	10:
+		RobotHorizontalDevice.DeviceCmd := FALSE;
+		RobotVerticalDevice.DeviceCmd := FALSE;
+		RobotGripperDevice.DeviceCmd := FALSE;
+		IF  RobotHorizontalDevice.DeviceState = Disabled AND 
+			RobotVerticalDevice.DeviceState = Disabled AND 
+			RobotGripperDevice.DeviceState = Disabled THEN
+			
+			State := 20;
+		END_IF
+	
+	// wait for product	
+	20:		
+		IF ProductOnPickupPositionSensor THEN
+			State := 30;
+		END_IF
+		
+	// grab product
+	30:
+		RobotGripperDevice.DeviceCmd := TRUE;
+		IF RobotGripperDevice.DeviceState = Enabled THEN
+			State := 40;
+		END_IF
+		
+	// move product up
+	40:
+		PickupPositionSensorSignalMonitor.Enable := TRUE;
+		PickupPositionSensorSignalMonitor.SignalToMonitor := NOT ProductOnPickupPositionSensor;
+	
+		RobotVerticalDevice.DeviceCmd := TRUE;
+		IF RobotVerticalDevice.DeviceState = Enabled THEN
+			PickupPositionSensorSignalMonitor.Enable := FALSE;
+			State := 50;
+		END_IF
+		
+	// move product right
+	50:
+		RobotHorizontalDevice.DeviceCmd := TRUE;
+		IF RobotHorizontalDevice.DeviceState = Enabled THEN
+			State := 60;
+		END_IF
+
+	// move product down
+	60:	
+		RobotVerticalDevice.DeviceCmd := FALSE;
+		IF RobotVerticalDevice.DeviceState = Disabled THEN
+			State := 70;
+		END_IF	
+		
+	// release the product and go back
+	70:
+		RobotGripperDevice.DeviceCmd := FALSE;
+		IF RobotGripperDevice.DeviceState = Disabled THEN
+			State := 10;
+		END_IF		
+
+	// hold state
+	500:
+		IF NOT Hold THEN
+			State := HoldState;
+			HoldState := 0;
+		END_IF
+		
+	// stopping state
+	1000:
+		RobotGripperDevice.DeviceCmd := FALSE;
+		IF (RobotHorizontalDevice.DeviceState = Disabled OR RobotHorizontalDevice.DeviceState = Enabled) AND
+		   (RobotVerticalDevice.DeviceState = Disabled OR RobotVerticalDevice.DeviceState = Enabled) AND
+		   RobotGripperDevice.DeviceState = Disabled THEN
+		   
+		   State :=0;
+		   
+		END_IF
+	
+END_CASE
+
+
+// emergency management
+IF State &lt;&gt; 0 AND Emergency THEN
+	State := 0;
+	RobotHorizontalDevice.EnableGenericDevice := FALSE;
+	RobotVerticalDevice.EnableGenericDevice := FALSE;
+	RobotGripperDevice.EnableGenericDevice := FALSE;
+END_IF
+
+// stop management
+IF State &lt;&gt; 0 AND State &lt;&gt; 1000 AND Stop THEN
+	State := 1000;
+END_IF
+
+// hold management
+IF State &lt;&gt; 0 AND State &lt;&gt; 500 AND State &lt;&gt; 1000 AND Hold THEN
+	HoldRequest := TRUE;
+END_IF
+
+IF State &lt;&gt; 500 AND HoldRequest THEN
+	HoldRequest := FALSE;
+	HoldState := State;
+	State := 500;
+END_IF
+
+// ******* StationState management *********
+IF (State = 0) THEN 	StationState := EnumStationState.NotRunning;
+ELSIF State = 500 THEN 	StationState := EnumStationState.Holding;
+ELSIF State = 1000 THEN StationState := EnumStationState.Stopping;
+ELSE 					StationState := EnumStationState.Running;	
+END_IF
+
+// ******* Station Fault management *********
+
+PickupPositionSensorSignalMonitor(Enable:= , SignalToMonitor:= , Reset:=ResetButton , Fault=&gt; );
+
+SignalManagement(
+	SignalActive:= PickupPositionSensorSignalMonitor.Fault , 
+	SignalName:= 'Product On Pickup Position Sensor Fault OR Robot Gripper Fault', 
+	SignalId:= 35, 
+	SignalType:= Alarm, 
+	AutoReset:= FALSE, 
+	Reset:= ResetButton, 
+	SignalList:= GlobalSignalList);</xhtml>
+                  </ST>
+                </body>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>9db99bc4-8220-4898-bf2a-19ea579dbb5d</ObjectId>
+                  </data>
+                </addData>
+              </pou>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/libraries" handleUnknown="implementation">
+              <Libraries>
+                <Library Name="#BreakpointLogging" Namespace="BPLog" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="Breakpoint Logging Functions, 3.5.5.0 (3S - Smart Software Solutions GmbH)" />
+                <Library Name="#Standard" Namespace="Standard" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="false" LinkAllContent="false" DefaultResolution="Standard, * (System)" />
+                <Library Name="#IoStandard" Namespace="IoStandard" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="true" DefaultResolution="IoStandard, 3.5.17.0 (System)" />
+                <Library Name="#3SLicense" Namespace="_3S_LICENSE" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="3SLicense, 0.0.0.0 (3S - Smart Software Solutions GmbH)" ResolverGuid="97c3b452-d9fa-4ac2-9d0c-3d420aa6d95b" />
+                <Library Name="#CAA Device Diagnosis" Namespace="DED" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="CAA Device Diagnosis, 3.5.18.0 (CAA Technical Workgroup)" />
+                <Library Name="#System_VisuElems" Namespace="VisuElems" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElems, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemMeter" Namespace="VisuElemMeter" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemMeter, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemsSpecialControls" Namespace="VisuElemsSpecialControls" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemsSpecialControls, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemsWinControls" Namespace="VisuElemsWinControls" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemsWinControls, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemTextEditor" Namespace="VisuElemTextEditor" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemTextEditor, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemTrace" Namespace="VisuElemTrace" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemTrace, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuNativeControl" Namespace="VisuNativeControl" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuNativeControl, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemsAlarm" Namespace="VisuElemsAlarm" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemsAlarm, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemCamDisplayer" Namespace="VisuElemCamDisplayer" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemCamDisplayer, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElem3DPath" Namespace="VisuElem3DPath" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElem3DPath, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemsDateTime" Namespace="VisuElemsDateTime" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemsDateTime, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuElemXYChart" Namespace="VisuElemXYChart" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuElemXYChart, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <Library Name="#System_VisuInputs" Namespace="VisuInputs" HideWhenReferencedAsDependency="false" PublishSymbolsInContainer="false" SystemLibrary="true" LinkAllContent="false" DefaultResolution="VisuInputs, 4.7.0.0 (System)" ResolverGuid="2717eb6a-dd07-4c66-8d8d-cacebd7b18ae" />
+                <PlaceholderRedirections>
+                  <PlaceholderRedirection Placeholder="System_VisuElemXYChart" Redirection="VisuElemXYChart, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemCamDisplayer" Redirection="VisuElemCamDisplayer, 4.7.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="ElementCollections" Redirection="Element Collections, 4.0.0.0 (CODESYS)" />
+                  <PlaceholderRedirection Placeholder="Standard" Redirection="Standard, 3.5.18.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemMeter" Redirection="VisuElemMeter, 4.7.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemsSpecialControls" Redirection="VisuElemsSpecialControls, 4.7.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemTextEditor" Redirection="VisuElemTextEditor, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemTrace" Redirection="VisuElemTrace, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="Util" Redirection="Util, 3.5.21.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuInputs" Redirection="VisuInputs, 4.7.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="FloatingPointUtils" Redirection="FloatingPointUtils, 3.5.21.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElems" Redirection="VisuElems, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="StringUtils" Redirection="StringUtils, 3.5.20.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemsDateTime" Redirection="VisuElemsDateTime, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemsAlarm" Redirection="VisuElemsAlarm, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="CBML" Redirection="Common Behaviour Model, 4.0.0.0 (CODESYS)" />
+                  <PlaceholderRedirection Placeholder="MemoryBlockManager" Redirection="Memory Block Manager, 3.5.21.0 (CODESYS)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElem3DPath" Redirection="VisuElem3DPath, 4.7.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="Standard64" Redirection="Standard64, 3.5.20.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuElemsWinControls" Redirection="VisuElemsWinControls, 4.8.0.0 (System)" />
+                  <PlaceholderRedirection Placeholder="Collections" Redirection="Collections, 3.5.17.0 (System)" />
+                  <PlaceholderRedirection Placeholder="System_VisuNativeControl" Redirection="VisuNativeControl, 4.8.0.0 (System)" />
+                </PlaceholderRedirections>
+                <addData>
+                  <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                    <ObjectId>6ce2c4be-3639-43f0-b7bc-49010729f5de</ObjectId>
+                  </data>
+                </addData>
+              </Libraries>
+            </data>
+            <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+              <ObjectId>ddcd5aa0-6b70-4f0d-bbff-03f5bebfb06d</ObjectId>
+            </data>
+          </addData>
+        </resource>
+        <addData>
+          <data name="Device" handleUnknown="discard">
+            <Device xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="">
+              <DeviceType>
+                <DeviceIdentification>
+                  <Type>4097</Type>
+                  <Id>0000 000a</Id>
+                  <Version>3.5.21.10</Version>
+                </DeviceIdentification>
+                <Connector moduleType="256" interface="Common.PCI" connectorId="0">
+                  <HostParameterSet />
+                </Connector>
+                <Connector moduleType="769" interface="SafetyInterface" connectorId="1">
+                  <HostParameterSet />
+                </Connector>
+                <DeviceParameterSet />
+              </DeviceType>
+            </Device>
+          </data>
+          <data name="configurations" handleUnknown="discard">
+            <configurations />
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>2945db2b-4a65-4905-bb73-0f308482634c</ObjectId>
+          </data>
+        </addData>
+      </configuration>
+    </configurations>
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Object Name="CODESYS_Control_Win_V3_x64" ObjectId="2945db2b-4a65-4905-bb73-0f308482634c">
+          <Object Name="Application" ObjectId="ddcd5aa0-6b70-4f0d-bbff-03f5bebfb06d">
+            <Object Name="Library Manager" ObjectId="6ce2c4be-3639-43f0-b7bc-49010729f5de" />
+            <Object Name="Main" ObjectId="8e9de372-7011-4e91-88f4-1851ceab56ef">
+              <Object Name="A_GenericDevicesCall" ObjectId="a52224c8-2c91-430d-9687-0f7f7bea87c1" />
+              <Object Name="A_StationsCall" ObjectId="2aeacad9-b408-461e-8c31-fc04fe8a2f08" />
+              <Object Name="A_MainFaults" ObjectId="814bcf01-811b-4b42-bd2b-b9deb771cc79" />
+            </Object>
+            <Folder Name="Generic Device">
+              <Object Name="FB_GenericDevice" ObjectId="844d6350-2418-4429-8e1a-6591b8a97af9" />
+              <Folder Name="Data Types">
+                <Object Name="EnumFeedbackType" ObjectId="b8fb22ae-0c9b-4b9e-a48b-ca7545c20c20" />
+                <Object Name="EnumActuationType" ObjectId="93c44928-cfa6-4fca-b20f-30fa170e27e8" />
+                <Object Name="EnumDeviceState" ObjectId="7e369da4-efb5-4a91-8570-fb87d656d0a0" />
+                <Object Name="EnumDeviceFault" ObjectId="6e827e40-8d73-4157-8cc0-3f3fa5e1c682" />
+              </Folder>
+            </Folder>
+            <Object Name="GVL_Actuators" ObjectId="e0b58f86-4533-40fb-bc84-948b21a77128" />
+            <Object Name="GVL_Buttons" ObjectId="53998b1e-cab4-4923-ba29-1673dc00de4a" />
+            <Object Name="GVL_Sensors" ObjectId="4b9ea2f2-ea0f-4499-9a98-56a61b3c0384" />
+            <Folder Name="SignalManagment">
+              <Folder Name="DataTypes">
+                <Object Name="EnumSignalType" ObjectId="5551a732-3ff1-4fad-bfaf-be2b3a9d88b2" />
+                <Object Name="StSignal" ObjectId="f422b3d4-080b-43c2-b134-75d725cdca1e" />
+                <Object Name="StSignalList" ObjectId="34bc3ce2-86e2-4db6-abb2-d43b466caf95" />
+              </Folder>
+              <Object Name="GVL_SignalManagement" ObjectId="636edfc4-4aa6-4600-8c36-bc38f299def7" />
+              <Object Name="FB_SignalManagement" ObjectId="2b3bbfb2-bc49-4cc4-a22b-773daf28f655" />
+              <Object Name="FB_SignalMonitor" ObjectId="a8e3f602-a490-4de4-8c54-09853747e0e1" />
+            </Folder>
+            <Folder Name="ModularProgram">
+              <Object Name="EnumStationState" ObjectId="f59ddbb9-ee79-4a99-93f4-f20e06b146e9" />
+              <Object Name="ConveyorStation" ObjectId="aaea375a-c2ea-4732-bd62-c5b851569557">
+                <Object Name="FillingStationStateMachine" ObjectId="b90afd1a-2261-493a-aeb8-91f122b5f2fc" />
+                <Object Name="CappingStationStateMachine" ObjectId="60cf597a-529e-404f-8dad-4088d3ea903c" />
+              </Object>
+              <Object Name="RobotStation" ObjectId="9db99bc4-8220-4898-bf2a-19ea579dbb5d" />
+            </Folder>
+            <Object Name="GVL_GenericDevices" ObjectId="2b7438f2-0768-42f8-b4b3-91b9dd8ba5ac" />
+          </Object>
+        </Object>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>
