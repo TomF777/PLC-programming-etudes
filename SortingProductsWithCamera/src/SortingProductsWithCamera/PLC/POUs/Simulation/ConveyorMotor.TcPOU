@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ConveyorMotor" Id="{fff22e32-e24e-475c-9452-0bca551d8b63}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ConveyorMotor
+VAR_INPUT
+	Start			:	BOOL;
+END_VAR
+VAR_OUTPUT
+	RunCmd			:	BOOL;
+END_VAR
+VAR
+	tonStartTime	:	TON;
+	tofStopTime		:	TOF;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+	Simulation of conveyor motor control 
+*)
+
+tonStartTime(IN:=Start , PT:=T#300MS);
+tofStopTime(IN:=Start , PT:=T#200MS);
+
+RunCmd := tonStartTime.Q OR tofStopTime.Q;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

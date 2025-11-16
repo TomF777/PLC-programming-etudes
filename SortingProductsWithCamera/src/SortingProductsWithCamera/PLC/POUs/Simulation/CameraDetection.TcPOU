@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="CameraDetection" Id="{f225948f-a8f6-4cb3-afa0-4c03033fa410}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CameraDetection
+VAR_INPUT
+	Trigger			:	BOOL;		// trigger for camera read
+END_VAR
+VAR_OUTPUT
+	Code			:	STRING;		// code read out by camera
+	CodeReady		:	BOOL;		// code ready 
+	Busy			:	BOOL;		// processing image
+END_VAR
+VAR
+	ftReadCamera	:	F_TRIG;
+	tpReadCamera	:	TP;
+	CharCodes		:	ARRAY[0..9] OF STRING(2) := ['PC', 'PC', 'PC', 'PC', 'PC', 'PC', 'KL', 'PC', 'PC', 'CG'];
+	RandCode		:	DRAND;
+	RandNumber		:	DRAND;
+	RandVal			:	LREAL;
+	Idx				:	UINT;
+	CodeNumber		:	UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+	Simulation of camera read detection
+	Trigger starts reading process.
+	Detected code is passed as Code on FB output.
+	Detected code should have XXYYYY format, where
+	XX - two char alphabetical code
+	YYYY - four digit number  
+*)
+
+// detect trigger and delay some time for stability
+tpReadCamera(IN:=Trigger,
+			  PT:=T#400MS, 
+			  Q=>, 
+			  ET=> );
+			  
+IF tpReadCamera.Q THEN
+	Busy := TRUE;
+	CodeReady := FALSE;
+ELSE
+	Busy := FALSE;
+END_IF
+			  
+ftReadCamera(CLK:=tpReadCamera.Q);
+CodeReady := FALSE;
+			  
+IF ftReadCamera.Q THEN
+	// create XX part of the code
+	RandCode(Seed:=1, Num=>RandVal);
+	Idx := LIMIT(0, LREAL_TO_UINT(RandVal * 10.0) - 1, 9);
+	
+	// create YYYY part of the code -> max value=9999
+	RandNumber(Seed:=3, Num=>RandVal);
+	CodeNumber := LREAL_TO_UINT(RandVal * 10000.0) - 1;
+	
+	IF Idx <= 9 THEN
+		Code := CONCAT(CharCodes[Idx], UINT_TO_STRING(CodeNumber));
+		CodeReady := TRUE;
+	END_IF
+END_IF
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

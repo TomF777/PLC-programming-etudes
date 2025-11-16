@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.65">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{0E718249-2745-435C-BD74-9AC68A953F4B}" PersistentType="true">EventClass</Name>
+			<DisplayName TxtId=""><![CDATA[NewEventClass_DisplayText]]></DisplayName>
+			<EventId>
+				<Name Id="1">Event01</Name>
+				<DisplayName TxtId=""><![CDATA[this is event 01]]></DisplayName>
+				<Severity>Verbose</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{A6801BA7-496B-4399-981D-2EF4FF00C0D2}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+	<Project ProjectGUID="{1BBBC257-71B7-464C-9203-9C8E6314EAC0}" Target64Bit="true" ShowHideConfigurations="#x7">
+		<System>
+			<Settings MaxCpus="8" NonWinCpus="2" Packages="2">
+				<Cpu CpuId="6"/>
+				<Cpu CpuId="7"/>
+			</Settings>
+			<Tasks>
+				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project File="PLC.xti"/>
+		</Plc>
+	</Project>
+</TcSmProject>

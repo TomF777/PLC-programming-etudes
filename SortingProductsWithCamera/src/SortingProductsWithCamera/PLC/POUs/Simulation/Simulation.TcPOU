@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="Simulation" Id="{e3b5199b-23dc-4c37-ab6a-be8d2568defb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Simulation
+VAR
+	ProductPosition		:	stProductPos;
+	Xoffset				:	REAL;
+	Yoffset				:	REAL;
+	tpSensor			: 	ARRAY[1..10] OF TP;
+	Idx					: 	UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT Main.Control.Arm01Cmd AND NOT Main.Control.Arm02Cmd AND
+	NOT Main.Control.Arm03Cmd AND NOT Main.Control.Arm04Cmd AND
+	NOT Main.Control.ArmScrap THEN
+	Xoffset := 0.5;
+END_IF
+
+IF MAIN.Control.ConveyorMotorCmd THEN
+	ProductPosition.X := ProductPosition.X + Xoffset;
+	ProductPosition.Y := ProductPosition.Y + Yoffset; 
+END_IF
+
+IF ProductPosition.X > 88 AND ProductPosition.X < 97 THEN
+	GVL.ProductPresenceSensor := TRUE;
+ELSE 
+	GVL.ProductPresenceSensor := FALSE;
+END_IF
+
+IF Main.Control.Arm01Cmd AND 
+	MAIN.Control.ConveyorMotorCmd AND
+    ProductPosition.X >= 200 THEN
+	Xoffset := 0.0;
+	Yoffset := 0.4;
+	
+ELSIF Main.Control.Arm02Cmd AND 
+	MAIN.Control.ConveyorMotorCmd AND
+    ProductPosition.X >= 300 THEN
+	Xoffset := 0.0;
+	Yoffset := 0.4;
+	
+ELSIF Main.Control.Arm03Cmd AND 
+	MAIN.Control.ConveyorMotorCmd AND
+    ProductPosition.X >= 400 THEN
+	Xoffset := 0.0;
+	Yoffset := 0.4;
+	
+ELSIF Main.Control.Arm04Cmd AND 
+	MAIN.Control.ConveyorMotorCmd AND
+    ProductPosition.X >= 500 THEN
+	Xoffset := 0.0;
+	Yoffset := 0.4;
+	
+ELSIF Main.Control.ArmScrap AND 
+	MAIN.Control.ConveyorMotorCmd AND
+    ProductPosition.X >= 620 THEN
+	Xoffset := 0.0;
+	Yoffset := 0.4;
+END_IF
+
+
+IF ProductPosition.Y >= 60 THEN
+	ProductPosition.X := 0.0;
+	ProductPosition.Y := 0.0;
+	Yoffset := 0.0;
+END_IF
+
+// simulation of counting sensor
+tpSensor[1](PT:=T#300MS);
+tpSensor[2](PT:=T#300MS);
+tpSensor[3](PT:=T#300MS);
+tpSensor[4](PT:=T#300MS);
+tpSensor[5](PT:=T#300MS);
+GVL.PostCodeSensor01 := tpSensor[1].Q;
+GVL.PostCodeSensor02 := tpSensor[2].Q;
+GVL.PostCodeSensor03 := tpSensor[3].Q;
+GVL.PostCodeSensor04 := tpSensor[4].Q;
+GVL.InvalidPostCodesSensor := tpSensor[5].Q;
+
+FOR Idx:= 1 TO 10 DO
+	IF tpSensor[Idx].Q THEN
+		tpSensor[Idx].IN := FALSE;
+	END_IF
+END_FOR
+
+
+IF ProductPosition.Y > 45 AND 
+	ProductPosition.Y < 55 AND
+	Main.Control.Arm01Cmd THEN
+	//GVL.PostCodeSensor01 := TRUE;
+	tpSensor[1].IN := TRUE;
+ELSE
+	;
+	//GVL.PostCodeSensor01 := FALSE;
+END_IF
+
+IF ProductPosition.Y > 45 AND 
+	ProductPosition.Y < 55 AND
+	Main.Control.Arm02Cmd THEN
+	//GVL.PostCodeSensor02 := TRUE;
+	tpSensor[2].IN := TRUE;
+ELSE
+	;
+	//GVL.PostCodeSensor02 := FALSE;
+END_IF
+
+IF ProductPosition.Y > 45 AND 
+	ProductPosition.Y < 55 AND
+	Main.Control.Arm03Cmd THEN
+	//GVL.PostCodeSensor03 := TRUE;
+	tpSensor[3].IN := TRUE;
+ELSE
+	;
+	//GVL.PostCodeSensor03 := FALSE;
+END_IF
+
+IF ProductPosition.Y > 45 AND 
+	ProductPosition.Y < 55 AND
+	Main.Control.Arm04Cmd THEN
+	//GVL.PostCodeSensor04 := TRUE;
+	tpSensor[4].IN := TRUE;
+ELSE
+	;
+	//GVL.PostCodeSensor04 := FALSE;
+END_IF
+
+
+IF ProductPosition.Y > 45 AND 
+	ProductPosition.Y < 55 AND
+	Main.Control.ArmScrap THEN
+	tpSensor[5].IN := TRUE;
+	//GVL.InvalidPostCodesSensor := TRUE;
+ELSE
+	;
+	//GVL.InvalidPostCodesSensor := FALSE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

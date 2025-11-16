@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{f2c0b1af-d015-41cd-8ab3-4cecb4ff648c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	Control			:	Control;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Simulation();
+
+Control(StartPb	:= GVL.StartButton,
+		StopPb	:= GVL.StopButton,
+		PresenceSensor := GVL.ProductPresenceSensor,
+		PostCodeSensor01 := GVL.PostCodeSensor01,
+		PostCodeSensor02 := GVL.PostCodeSensor02,
+		PostCodeSensor03 := GVL.PostCodeSensor03,
+		PostCodeSensor04 := GVL.PostCodeSensor04,
+		InvalidPostCodeSensor := GVL.InvalidPostCodesSensor,
+		ConveyorMotorCmd => GVL.ConveyorMotor,
+		Arm01Cmd => GVL.SwingArm01,
+		Arm02Cmd => GVL.SwingArm02,
+		Arm03Cmd => GVL.SwingArm03,
+		Arm04Cmd => GVL.SwingArm04,
+		);
+		]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
